@@ -15,25 +15,40 @@
 		    overflow: hidden;
 			}
 
-			#container {
-				width: 800px;
-				margin-left: auto;
-				margin-right: auto;
-			}
 			#antcanvas { 
 				width: 800px;
 				height: 600px;
 			}
+
+
+			#controls {
+				width: 250px;
+				position: fixed;
+				left: 20px;
+				top: 20px;
+				background: #cdcdcd;
+				opacity: 10%;
+			}
+
 			#info {
-				width: 800px;
-				margin-left: auto;
-				margin-right: auto;
+				position: fixed;
+				bottom: 0px;
+				right: 0px;
+				margin-bottom: 20px;
+				margin-right: 20px;
 			}
 		</style>
 	</head>
 <body>
-	<div id="container">
 	<canvas id="antcanvas"></canvas>
+	<div id="controls">
+		<div id="toolbar">
+			<a href="#">Start</a>
+			<a href="#">Reset</a>
+		</div>
+		<div id="advanced">
+
+		</div>
 	</div>
 	<div id="info">
 		<p>	<a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> | 
@@ -49,6 +64,18 @@
 		canvas.height = 600;
 
 	</script>
-	<script src="../analytics.js"></a>
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41728580-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
 </html>
