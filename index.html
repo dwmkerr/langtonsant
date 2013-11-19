@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 	<head>
 		<title>Langton's Ant</title>
 		<link rel="stylesheet" type="text/css" href="css/core.css">
 		<link rel="stylesheet" type="text/css" href="css/typeography.css">
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="js/langtonsant.js"></script>
+        <script src="js/langtonsAntController.js"></script>
 		<style>
 	
 			/* Styling needed for a fullscreen canvas and no scrollbars. */
@@ -32,8 +35,8 @@
 
 			#info {
 				position: fixed;
-				bottom: 0px;
-				right: 0px;
+				bottom: 0;
+				right: 0;
 				margin-bottom: 20px;
 				margin-right: 20px;
 			}
@@ -41,10 +44,10 @@
 	</head>
 <body>
 	<canvas id="antcanvas"></canvas>
-	<div id="controls">
+	<div id="controls" ng-controller="LangtonsAntController">
 		<div id="toolbar">
-			<a href="#">Start</a>
-			<a href="#">Reset</a>
+			<a href="" ng-click="start()">Start</a>
+			<a href="" ng-click="reset()">Reset</a>
 		</div>
 		<div id="advanced">
 
@@ -55,7 +58,6 @@
 			<a href="http://www.dwmkerr.com/experiments">more experiments</a> | <a href="http://www.dwmkerr.com">dwmkerr.com</a></p>
 	</div>
 
-	<script src="js/langtonsant.js"></script>
 	<script>
 
 		//	Setup the canvas.

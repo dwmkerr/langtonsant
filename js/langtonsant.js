@@ -58,7 +58,7 @@ function LangtonsAnt() {
 	this.advanceTile = function(x, y) {
 		var state = this.getTile(x, y);
 		state++;
-		if(state == states.length()) {
+		if(state == this.states.length) {
 			state = 0;
 		}
 		this.setTile(x, y, state);
@@ -68,7 +68,7 @@ function LangtonsAnt() {
 	this.stepForwards = function() {
 
 		//	Get the state of the tile that the ant is on and update that tile.
-		var state = this.getState(this.antPosition.x, this.antPosition.y);
+		var state = this.getTile(this.antPosition.x, this.antPosition.y);
 		this.advanceTile(this.antPosition.x, this.antPosition.y);
 
 		//	Change direction.
@@ -81,7 +81,7 @@ function LangtonsAnt() {
 
 		//	Move the ant.
 		if(this.antDirection === 0) {
-			this.anyPosition.y++;
+			this.antPosition.y++;
 		} else if (this.antDirection === 90 || this.antDirection === -270) {
 			this.antPosition.x++;
 		} else if (this.antDirection === 180 || this.antDirection === -180) {
@@ -93,7 +93,7 @@ function LangtonsAnt() {
 
 	};
 
-	this.initialise = function(configuration) {
+	this.initialise = function (configuration) {
 
 		//	Reset the tiles, ant and states.
 		this.antPosition = {
@@ -117,4 +117,21 @@ function LangtonsAnt() {
 			this.states = ['L', 'R'];
 		}
 	};
+
+    this.render = function(canvas) {
+
+        //	Get the drawing context.
+        var ctx = canvas.getContext("2d");
+
+        //	Draw the background.
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        //	Draw stars.
+     /*   ctx.fillStyle = '#ffffff';
+        for(var i=0; i<this.stars.length;i++) {
+            var star = this.stars[i];
+            ctx.fillRect(star.x, star.y, star.size, star.size);
+        }*/
+    };
 }
