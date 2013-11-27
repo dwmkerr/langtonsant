@@ -19,8 +19,7 @@
 			}
 
 			#antcanvas { 
-				width: 800px;
-				height: 600px;
+				display:block;
 			}
 
 
@@ -46,11 +45,15 @@
 	<canvas id="antcanvas"></canvas>
 	<div id="controls" ng-controller="LangtonsAntController">
 		<div id="toolbar">
+			<button type="button" ng-click="start()">Start</button>
 			<a href="" ng-click="start()">Start</a>
 			<a href="" ng-click="reset()">Reset</a>
 		</div>
 		<div id="advanced">
-
+            <p><label for="fps">Frames/second</label>
+            	<input type="text" ng-model="drawFrequency"></p>
+            <p><label for="tps">Ticks/second</label>
+            	<input type="text" ng-model="tickFrequency"></p>
 		</div>
 	</div>
 	<div id="info">
@@ -62,8 +65,17 @@
 
 		//	Setup the canvas.
 		var canvas = document.getElementById("antcanvas");
-		canvas.width = 800;
-		canvas.height = 600;
+
+		function sizeCanvasToWindow() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+
+		window.addEventListener('resize', function resize(event) {
+			sizeCanvasToWindow();
+		    self.draw(); 
+		});
+		sizeCanvasToWindow();
 
 	</script>
 	<script type="text/javascript">

@@ -20,7 +20,7 @@ function LangtonsAnt() {
 	//	The direction of the ant, in degrees clockwise from north.
 	this.antDirection = 0;
 
-	//	A set of all tiles. The value for each tile is its state.
+	//	A set of all tiles. The value for each tile is its state index.
 	this.tiles = [];
 
 	//	The bounds of the system.
@@ -31,50 +31,55 @@ function LangtonsAnt() {
 		yMax: 0
 	};
 
-	//	Gets a tile state.
-	this.getTile = function(x, y) {
-		if(this.states[x] === undefined) {
-			this.states[x] = [];
-		}
-		var state = this.states[x][y];
-		return state === undefined ? 0 : state;
-	};
-
-	//	Set a tile state.
-	this.setTile = function(x, y, state) {
+	//	Gets a tile state index.
+	this.getTileStateIndex = function(x, y) {
 		if(this.tiles[x] === undefined) {
 			this.tiles[x] = [];
 		}
-		this.tiles[x][y] = state;
+		var stateIndex = this.tiles[x][y];
+		return stateIndex === undefined ? 0 : stateIndex;
+	};
+
+	//	Gets a tile state.
+	this.getTileState = function(x, y) {
+		return this.states[this.getTileStateIndex(x, y)];
+	}
+
+	//	Set a tile state index.
+	this.setTileStateIndex = function(x, y, stateIndex) {
+		if(this.tiles[x] === undefined) {
+			this.tiles[x] = [];
+		}
+		this.tiles[x][y] = stateIndex;
 
 		//	Update the bounds of the system.
 		if(x < this.bounds.xMin) {this.bounds.xMin = 0;}
-		if(x > this.bounds.xMax) {this.bounds.xMin = 0;}
-		if(y < this.bounds.yMin) {this.bounds.yMax = 0;}
+		if(x > this.bounds.xMax) {this.bounds.xMax = 0;}
+		if(y < this.bounds.yMin) {this.bounds.yMin = 0;}
 		if(y > this.bounds.yMax) {this.bounds.yMax = 0;}
 	};
 
 	//	Advance a tile states.
 	this.advanceTile = function(x, y) {
-		var state = this.getTile(x, y);
-		state++;
-		if(state == this.states.length) {
-			state = 0;
+		var stateIndex = this.getTileStateIndex(x, y);
+		stateIndex++;
+		if(stateIndex == this.states.length) {
+			stateIndex = 0;
 		}
-		this.setTile(x, y, state);
+		this.setTileStateIndex(x, y, stateIndex);
 	};
 
 	//	Take a step forwards.
 	this.stepForwards = function() {
 
 		//	Get the state of the tile that the ant is on and update that tile.
-		var state = this.getTile(this.antPosition.x, this.antPosition.y);
+		var state = this.getTileState(this.antPosition.x, this.antPosition.y);
 		this.advanceTile(this.antPosition.x, this.antPosition.y);
 
 		//	Change direction.
-		if(state === 'L') {
+		if(state.direction === 'L') {
 			this.antDirection -= 90;
-		} else if(state === 'R') {
+		} else if(state.direction === 'R') {
 			this.antDirection += 90;
 		}
 		this.antDirection %= 360;
@@ -114,7 +119,10 @@ function LangtonsAnt() {
 		if(configuration.states !== undefined) {
 			this.states = configuration.states;
 		} else {
-			this.states = ['L', 'R'];
+			this.states = [
+				{direction: 'L', colour: '#FFFFFF'}, 
+				{direction: 'R', colour: '#000000'}
+			];
 		}
 	};
 
@@ -127,11 +135,45 @@ function LangtonsAnt() {
         ctx.fillStyle = '#000000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        //	Draw stars.
-     /*   ctx.fillStyle = '#ffffff';
-        for(var i=0; i<this.stars.length;i++) {
-            var star = this.stars[i];
-            ctx.fillRect(star.x, star.y, star.size, star.size);
-        }*/
+        //	We're going to draw each square with a given edge size.
+        var tileSize = 25;
+
+        //	Useful variables for when we're drawing...
+        var width = canvas.width,
+        	height = canvas.height,
+        	originX = width/2,
+        	originY = height/2;
+
+        // How many tiles will we draw?
+        var xTiles = Math.floor(canvas.width / tileSize),
+        	yTiles = Math.floor(canvas.height / tileSize),
+        	xFirst = Math.floor(-xTiles/2),
+        	xLast = -xFirst,
+        	yFirst = Math.floor(-yTiles/2),
+        	yLast = -yFirst,
+        	xPos = width/2 - (xTiles/2)*tileSize,
+        	yPos = height/2 - (yTiles/2)*tileSize;
+
+        //	Start drawing those tiles.
+        for(var x = xFirst; x <= xLast; x++) {
+        	for(var y = yFirst; y<= yLast; y++) {
+
+        		//	Get the tile state.
+        		var state = this.getTileState(x, y);
+
+        		//	Draw the tile.
+        		ctx.fillStyle = state.colour;
+        		ctx.fillRect(xPos, yPos, tileSize, tileSize);
+        		yPos += tileSize;
+        	}
+        	xPos += tileSize;
+        	yPos = 0;
+        }
+
+        //	Draw the ant.
+        var antX = this.antPosition.x * tileSize + width/2,
+        	antY = this.antPosition.y * tileSize + height/2;
+       	ctx.fillStyle = '#ff0000';
+       	ctx.fillRect(antX + 4, antY + 4, tileSize -8, tileSize - 8);
     };
 }
