@@ -22,7 +22,7 @@ function LangtonsAnt() {
 
 	//	A set of all tiles. The value for each tile is its state index.
 	this.tiles = [];
-
+	
 	//	The bounds of the system.
 	this.bounds = {
 		xMin: 0,
@@ -30,6 +30,9 @@ function LangtonsAnt() {
 		yMin: 0,
 		yMax: 0
 	};
+
+	//	The number of ticks.
+	this.ticks = 0;
 
 	//	Gets a tile state index.
 	this.getTileStateIndex = function(x, y) {
@@ -53,10 +56,10 @@ function LangtonsAnt() {
 		this.tiles[x][y] = stateIndex;
 
 		//	Update the bounds of the system.
-		if(x < this.bounds.xMin) {this.bounds.xMin = 0;}
-		if(x > this.bounds.xMax) {this.bounds.xMax = 0;}
-		if(y < this.bounds.yMin) {this.bounds.yMin = 0;}
-		if(y > this.bounds.yMax) {this.bounds.yMax = 0;}
+		if(x < this.bounds.xMin) {this.bounds.xMin = x;}
+		if(x > this.bounds.xMax) {this.bounds.xMax = x;}
+		if(y < this.bounds.yMin) {this.bounds.yMin = y;}
+		if(y > this.bounds.yMax) {this.bounds.yMax = y;}
 	};
 
 	//	Advance a tile states.
@@ -95,7 +98,7 @@ function LangtonsAnt() {
 		else {
 			this.antPosition.x--;
 		}
-
+		this.ticks++;
 	};
 
 	this.initialise = function (configuration) {
@@ -132,7 +135,8 @@ function LangtonsAnt() {
         var ctx = canvas.getContext("2d");
 
         //	Draw the background.
-        ctx.fillStyle = '#000000';
+        var backgroundColour = '#FFFFFF'
+        ctx.fillStyle = backgroundColour;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         //	We're going to draw each square with a given edge size.
@@ -161,9 +165,11 @@ function LangtonsAnt() {
         		//	Get the tile state.
         		var state = this.getTileState(x, y);
 
-        		//	Draw the tile.
-        		ctx.fillStyle = state.colour;
-        		ctx.fillRect(xPos, yPos, tileSize, tileSize);
+        		//	Draw the tile, but only if it's not the background color.
+        		if(state.colour != backgroundColour) {
+        			ctx.fillStyle = state.colour;
+        			ctx.fillRect(xPos, yPos, tileSize, tileSize);
+        		}
         		yPos += tileSize;
         	}
         	xPos += tileSize;
