@@ -34,6 +34,10 @@ function LangtonsAnt() {
 	//	The number of ticks.
 	this.ticks = 0;
 
+    //  The offset.
+    this.offsetX = 0;
+    this.offsetY = 0;
+
 	//	Gets a tile state index.
 	this.getTileStateIndex = function(x, y) {
 		if(this.tiles[x] === undefined) {
@@ -117,6 +121,8 @@ function LangtonsAnt() {
 			yMax: 0
 		};
 		this.states = [];
+        this.offsetX = 0;
+        this.offsetY = 0;
 
 		//	If we have no states, create our own.
 		if(configuration.states !== undefined) {
@@ -146,17 +152,23 @@ function LangtonsAnt() {
         var width = canvas.width,
         	height = canvas.height,
         	originX = width/2,
-        	originY = height/2;
+        	originY = height/ 2,
+            halfTileSize = tileSize/2;
 
-        // How many tiles will we draw?
-        var xTiles = Math.floor(canvas.width / tileSize),
-        	yTiles = Math.floor(canvas.height / tileSize),
-        	xFirst = Math.floor(-xTiles/2),
-        	xLast = -xFirst,
-        	yFirst = Math.floor(-yTiles/2),
-        	yLast = -yFirst,
-        	xPos = width/2 - (xTiles/2)*tileSize,
-        	yPos = height/2 - (yTiles/2)*tileSize;
+        //  Work out how many tiles we'll draw and the low/high
+        //  tile values (we basically want one more than will fit on the
+        //  canvas in each direction).
+        var xTiles = Math.floor(canvas.width / tileSize) + 2,
+        	yTiles = Math.floor(canvas.height / tileSize) + 2,
+        	xFirst = Math.floor(-xTiles/2) - 1,
+        	xLast = -xFirst + 1,
+        	yFirst = Math.floor(-yTiles/2) - 1,
+        	yLast = -yFirst + 1;
+
+        //  Rather than calculating the position of each time each time, calculate the
+        //  top left part of the top left tile and just nudge it each time.
+        var xPos = originX + xFirst*tileSize - halfTileSize + 1,
+            yPos = originY + yFirst*tileSize - halfTileSize + 1;
 
         //	Start drawing those tiles.
         for(var x = xFirst; x <= xLast; x++) {
@@ -168,18 +180,25 @@ function LangtonsAnt() {
         		//	Draw the tile, but only if it's not the background color.
         		if(state.colour != backgroundColour) {
         			ctx.fillStyle = state.colour;
-        			ctx.fillRect(xPos, yPos, tileSize, tileSize);
+        			ctx.fillRect(xPos, yPos, tileSize - 1, tileSize - 1);
         		}
         		yPos += tileSize;
         	}
         	xPos += tileSize;
-        	yPos = 0;
+        	yPos = originY + yFirst*tileSize - halfTileSize + 1;;
         }
 
         //	Draw the ant.
-        var antX = this.antPosition.x * tileSize + width/2,
-        	antY = this.antPosition.y * tileSize + height/2;
+        var antX = originX + this.antPosition.x * tileSize,
+            antY = originY + this.antPosition.y * tileSize;
+
        	ctx.fillStyle = '#ff0000';
-       	ctx.fillRect(antX + 4, antY + 4, tileSize -8, tileSize - 8);
+       	ctx.fillRect(antX - 8, antY - 8, 16, 16);
+
+        ctx.moveTo(originX-50,originY);
+        ctx.lineTo(originX+50,originY);
+        ctx.moveTo(originX,originY-50);
+        ctx.lineTo(originX,originY+50);
+        ctx.stroke();
     };
 }

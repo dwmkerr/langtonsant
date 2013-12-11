@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="langtonsant">
 	<head>
 		<title>Langton's Ant</title>
-		<link rel="stylesheet" type="text/css" href="css/core.css">
-		<link rel="stylesheet" type="text/css" href="css/typeography.css">
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <script src="bower_components/angular/angular.min.js"></script>
         <script src="js/langtonsant.js"></script>
-        <script src="js/langtonsAntController.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/directives.js"></script>
+        <script src="js/services.js"></script>
 		<style>
 	
 			/* Styling needed for a fullscreen canvas and no scrollbars. */
@@ -32,6 +34,13 @@
 				opacity: 10%;
 			}
 
+            #locationControls {
+                width: 250px;
+                position: fixed;
+                right: 20px;
+                top: 20px;
+            }
+
 			#info {
 				position: fixed;
 				bottom: 0;
@@ -43,26 +52,64 @@
 	</head>
 <body>
 	<canvas id="antcanvas"></canvas>
-	<div id="controls" ng-controller="LangtonsAntController">
-		<div id="toolbar">
-			<button type="button" ng-click="start()">Start</button>
-			<button type="button" ng-click="pause()">Pause</button>
-			<button type="button" ng-click="resume()">Resume</button>
-			<button type="button" ng-click="stop()">Stop</button>
+	<div id="controls" ng-controller="MainController as main">
+		<div class="btn-group">
+			<button type="button" ng-click="main.currentState == 'running' ? main.pause() : main.run()"
+                    class="btn btn-default">
+                <span ng-show="main.currentState == 'running'" class="glyphicon glyphicon-pause"></span>
+                <span ng-show="main.currentState != 'running'" class="glyphicon glyphicon-play"></span>
+			</button>
+            <button type="button" ng-click="main.reset()"
+                    class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
+            <button type="button" ng-click="main.showSettings = !main.ShowSettings"
+                    class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
 		</div>
-		<div id="advanced">
-            <p><label for="fps">Frames/second</label>
-            	<input type="text" ng-model="drawFrequency"></p>
+		<div id="advanced" ng-show="main.showSettings">
             <p><label for="tps">Ticks/second</label>
-            	<input type="text" ng-model="tickFrequency"></p>
-            <p>Ticks: {{currentTicks}}<br />
-            	Universe Bounds: {{currentMinX}} &lt; x &lt; {{currentMaxX}}<br />
-            	{{currentMinY}} &lt; y &lt; {{currentMaxY}}</p>
-            	<p>Ant: ({{antX}}, {{antY}})</p>
-            	<div ng-repeat="state in states">
-            		<p>{{state.direction}} - {{state.colour}}</p>
-            	</div>
+            	<input type="text" ng-model="main.tickFrequency"></p>
+            <p>Ticks: {{main.currentTicks}}<br />
+                Status: {{main.simulation.currentState }} <br />
+            	Universe Bounds: {{main.currentMinX}} &lt; x &lt; {{main.currentMaxX}}<br />
+            	{{main.currentMinY}} &lt; y &lt; {{main.currentMaxY}}</p>
+            	<p>Ant: ({{main.antX}}, {{main.antY}})</p>
+            	<table>
+            		<thead>
+            			<tr><td>Direction</td><td>Colour</td><td></td></tr>
+            		</thead>
+            		<tr ng-repeat="state in main.states">
+            			<td>{{state.direction}}</td>
+            			<td>{{state.colour}}</td>
+            			<td><a href="" ng-click="main.removeState(state)">X</a></td>
+            		</tr>
+            		<tr>
+            			<td><input type="text" ng-model="main.newState.direction" /></td>
+            			<td><input type="text" ng-model="main.newState.colour" /></td>
+            			<td><a href="" ng-click="main.addState()">Add</a></td>
+            		</tr>
+            	</table>
 		</div>
+        <div id="locationControls">
+            <table>
+                <tr>
+                    <td></td>
+                    <td><button class="btn btn-default" title="Move Up"><span class="glyphicon glyphicon-arrow-up"></span></button></td>
+                    <td></td>
+                    <td><button class="btn btn-default" title="Zoom In"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-default" title="Move Left"><span class="glyphicon glyphicon-arrow-left"></span></button></td>
+                    <td><button class="btn btn-default" title="Go to Centre"><span class="glyphicon glyphicon-move"></span></button></td>
+                    <td><button class="btn btn-default" title="Move Right"><span class="glyphicon glyphicon-arrow-right"></span></button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="btn btn-default" title="Move Down"><span class="glyphicon glyphicon-arrow-down"></span></button></td>
+                    <td></td>
+                    <td><button class="btn btn-default" title="Zoom Out"><span class="glyphicon glyphicon-zoom-out"></span></button></td>
+                </tr>
+            </table>
+        </div>
 	</div>
 	<div id="info">
 		<p>	<a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> | 
@@ -71,14 +118,12 @@
 
 	<script>
 
-		function forceRedraw() {
-			mainScope = angular.element(document.getElementById("controls")).scope();
-		    mainScope.render(); 
+		function redraw() {
+			mainScope = angular.element(document).injector().get('simulationService').render();
 		}
 
 		//	Setup the canvas.
 		var canvas = document.getElementById("antcanvas");
-
 		function sizeCanvasToWindow() {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
@@ -86,11 +131,11 @@
 
 		window.addEventListener('resize', function resize(event) {
 			sizeCanvasToWindow();
-			forceRedraw();
+			redraw();
 		});
 		sizeCanvasToWindow();
 
-		document.addEventListener("DOMContentLoaded", forceRedraw, false);
+		document.addEventListener("DOMContentLoaded", redraw(), false);
 
 	</script>
 	<script type="text/javascript">
@@ -106,5 +151,7 @@
   })();
 
 </script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
