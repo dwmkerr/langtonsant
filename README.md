@@ -9,7 +9,7 @@ TODO
 ----
 
  * DONE: Change Start/Stop/Pause/Resume etc to just Run/Pause
- * Enable Pan
+ * DONE: Enable Pan
  * Enable Zoom
  * Style toolbar
  * Toggle to show advanced panel.

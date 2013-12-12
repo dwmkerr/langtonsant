@@ -53,25 +53,25 @@
 <body>
 	<canvas id="antcanvas"></canvas>
 	<div id="controls" ng-controller="MainController as main">
-		<div class="btn-group">
-			<button type="button" ng-click="main.currentState == 'running' ? main.pause() : main.run()"
+		<div>
+			<button type="button" ng-click="main.getCurrentState() == 'running' ? main.pause() : main.run()"
                     class="btn btn-default">
-                <span ng-show="main.currentState == 'running'" class="glyphicon glyphicon-pause"></span>
-                <span ng-show="main.currentState != 'running'" class="glyphicon glyphicon-play"></span>
+                <span ng-show="main.getCurrentState() == 'running'" class="glyphicon glyphicon-pause"></span>
+                <span ng-show="main.getCurrentState() != 'running'" class="glyphicon glyphicon-play"></span>
 			</button>
             <button type="button" ng-click="main.reset()"
                     class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
-            <button type="button" ng-click="main.showSettings = !main.ShowSettings"
+            <button type="button" ng-click="main.toggleShowSettings()"
                     class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
 		</div>
 		<div id="advanced" ng-show="main.showSettings">
             <p><label for="tps">Ticks/second</label>
-            	<input type="text" ng-model="main.tickFrequency"></p>
+            	<input id="tps" type="text" ng-model="main.tickFrequency"></p>
             <p>Ticks: {{main.currentTicks}}<br />
-                Status: {{main.simulation.currentState }} <br />
-            	Universe Bounds: {{main.currentMinX}} &lt; x &lt; {{main.currentMaxX}}<br />
-            	{{main.currentMinY}} &lt; y &lt; {{main.currentMaxY}}</p>
-            	<p>Ant: ({{main.antX}}, {{main.antY}})</p>
+                Status: {{main.getCurrentState() }} <br />
+            	Universe Bounds: {{main.info.currentMinX}} &lt; x &lt; {{main.info.currentMaxX}}<br />
+            	{{main.info.currentMinY}} &lt; y &lt; {{main.info.currentMaxY}}</p>
+            	<p>Ant: ({{main.info.antX}}, {{main.info.antY}})</p>
             	<table>
             		<thead>
             			<tr><td>Direction</td><td>Colour</td><td></td></tr>
@@ -92,19 +92,19 @@
             <table>
                 <tr>
                     <td></td>
-                    <td><button class="btn btn-default" title="Move Up"><span class="glyphicon glyphicon-arrow-up"></span></button></td>
+                    <td><button class="btn btn-default" title="Move Up" ng-click="main.moveUp()"><span class="glyphicon glyphicon-arrow-up"></span></button></td>
                     <td></td>
                     <td><button class="btn btn-default" title="Zoom In"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-default" title="Move Left"><span class="glyphicon glyphicon-arrow-left"></span></button></td>
-                    <td><button class="btn btn-default" title="Go to Centre"><span class="glyphicon glyphicon-move"></span></button></td>
-                    <td><button class="btn btn-default" title="Move Right"><span class="glyphicon glyphicon-arrow-right"></span></button></td>
+                    <td><button class="btn btn-default" title="Move Left" ng-click="main.moveLeft()"><span class="glyphicon glyphicon-arrow-left"></span></button></td>
+                    <td><button class="btn btn-default" title="Go to Centre" ng-click="main.moveOrigin()"><span class="glyphicon glyphicon-move"></span></button></td>
+                    <td><button class="btn btn-default" title="Move Right"  ng-click="main.moveRight()"><span class="glyphicon glyphicon-arrow-right"></span></button></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button class="btn btn-default" title="Move Down"><span class="glyphicon glyphicon-arrow-down"></span></button></td>
+                    <td><button class="btn btn-default" title="Move Down" ng-click="main.moveDown()"><span class="glyphicon glyphicon-arrow-down"></span></button></td>
                     <td></td>
                     <td><button class="btn btn-default" title="Zoom Out"><span class="glyphicon glyphicon-zoom-out"></span></button></td>
                 </tr>
@@ -119,7 +119,11 @@
 	<script>
 
 		function redraw() {
-			mainScope = angular.element(document).injector().get('simulationService').render();
+            // try and get the service injector. if we can, we can re-render.
+            var scope = angular.element(document.getElementById('antcanvas')).scope();
+            if(scope !== null && scope !== undefined) {
+                scope.render();
+            }
 		}
 
 		//	Setup the canvas.

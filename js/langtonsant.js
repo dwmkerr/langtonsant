@@ -170,7 +170,14 @@ function LangtonsAnt() {
         var xPos = originX + xFirst*tileSize - halfTileSize + 1,
             yPos = originY + yFirst*tileSize - halfTileSize + 1;
 
+        //  Apply the offset.
+        xFirst += this.offsetX;
+        xLast += this.offsetX;
+        yFirst += this.offsetY;
+        yLast += this.offsetY;
+
         //	Start drawing those tiles.
+        var yCarriageReturn = yPos;
         for(var x = xFirst; x <= xLast; x++) {
         	for(var y = yFirst; y<= yLast; y++) {
 
@@ -185,8 +192,12 @@ function LangtonsAnt() {
         		yPos += tileSize;
         	}
         	xPos += tileSize;
-        	yPos = originY + yFirst*tileSize - halfTileSize + 1;;
+        	yPos = yCarriageReturn;
         }
+
+        //  Before we draw the ant and origin, nudge the origin.
+        originX -= this.offsetX * tileSize;
+        originY -= this.offsetY * tileSize;
 
         //	Draw the ant.
         var antX = originX + this.antPosition.x * tileSize,
@@ -195,10 +206,12 @@ function LangtonsAnt() {
        	ctx.fillStyle = '#ff0000';
        	ctx.fillRect(antX - 8, antY - 8, 16, 16);
 
+        ctx.beginPath();
         ctx.moveTo(originX-50,originY);
         ctx.lineTo(originX+50,originY);
         ctx.moveTo(originX,originY-50);
         ctx.lineTo(originX,originY+50);
+        ctx.closePath();
         ctx.stroke();
     };
 }

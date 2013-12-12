@@ -1,29 +1,29 @@
 //  All controllers go in the langtonsant.controllers module.
 angular.module('langtonsant.controllers', [])
-    .controller('MainController', function($scope, $interval, simulationService) {
+    .controller('MainController', function($scope, $interval, $document) {
 
         //  Scope variables - can be bound in the view.
 
         //  Do we show advanced settings?
-        $scope.showSettings = false;
+        this.showSettings = false;
 
         //  The frequency of simulation ticks
-        $scope.tickFrequency = 10;
+        this.tickFrequency = 10;
 
         //  Available tile states.
-        $scope.states = [
+        this.states = [
             {direction:'L', colour: '#FFFFFF'},
             {direction:'R', colour: '#000000'}
         ];
 
         //  Current (new) state that's being edited.
-        $scope.newState = {
+        this.newState = {
             direction: 'L',
             colour: '#336600'
         };
 
         //  Simulatio info.
-        $scope.info = {
+        this.info = {
             currentTicks: 0,
             currentMinX: 0,
             currentMaxX: 0,
@@ -36,13 +36,20 @@ angular.module('langtonsant.controllers', [])
         //  None scope variables. These are used by the controller, but not exposed.
         var currentState = "stopped";
         var tickIntervalId = null;
-        var simulation = simulationService.simulation;
+        var simulation = new LangtonsAnt();
+        var canvas = null;
+
+        //  When the document is ready, we'll grab the antcanvas.
+        $document.ready(function() {
+            canvas = document.getElementById('antcanvas');
+        });
 
         //  Initialise the simulation with the states.
-        simulation.initialise({states: $scope.states});
+        simulation.initialise({states: this.states});
 
         //  Runs the simulation.
-        $scope.run = function() {
+        var self = this;
+        this.run = function() {
             //  If we're already running, we can't start the simulation.
             if(currentState === 'running') {
                 return;
@@ -51,21 +58,35 @@ angular.module('langtonsant.controllers', [])
             //  Start the timer.
             tickIntervalId = $interval(function() {
                 simulation.stepForwards();
-                $scope.info.currentTicks = simulation.ticks;
-                $scope.info.currentMinX = simulation.bounds.xMin;
-                $scope.info.currentMaxX = simulation.bounds.xMax;
-                $scope.info.currentMinY = simulation.bounds.yMin;
-                $scope.info.currentMaxY = simulation.bounds.yMax;
-                $scope.info.antX = simulation.antPosition.x;
-                $scope.info.antY = simulation.antPosition.y;
-                $scope.render();
-            }, 1000 / $scope.tickFrequency);
+                self.info.currentTicks = simulation.ticks;
+                self.info.currentMinX = simulation.bounds.xMin;
+                self.info.currentMaxX = simulation.bounds.xMax;
+                self.info.currentMinY = simulation.bounds.yMin;
+                self.info.currentMaxY = simulation.bounds.yMax;
+                self.info.antX = simulation.antPosition.x;
+                self.info.antY = simulation.antPosition.y;
+                self.render();
+            }, 1000 / this.tickFrequency);
 
             //  Set the status.
             currentState = 'running';
         };
 
-        $scope.reset = function() {
+        this.getCurrentState = function() {
+            return currentState;
+        };
+
+        this.toggleShowSettings = function() {
+            this.showSettings = this.showSettings === true ? false : true;
+        }
+
+        this.render = function() {
+            if(canvas !== null && canvas !== undefined) {
+                simulation.render(canvas);
+            }
+        };
+
+        this.reset = function() {
 
             //  If we're running, stop the timer.
             if(currentState === 'running') {
@@ -74,21 +95,21 @@ angular.module('langtonsant.controllers', [])
 
             //  Completely recreate the simulation.
             simulation = new LangtonsAnt();
-            simulation.initialise({states: $scope.states});
-            $scope.info.currentTicks = 0;
-            $scope.info.currentMinX = 0;
-            $scope.info.currentMaxX = 0;
-            $scope.info.currentMinY = 0;
-            $scope.info.currentMaxY = 0;
-            $scope.info.antX = 0;
-            $scope.info.antY = 0;
+            simulation.initialise({states: this.states});
+            this.info.currentTicks = 0;
+            this.info.currentMinX = 0;
+            this.info.currentMaxX = 0;
+            this.info.currentMinY = 0;
+            this.info.currentMaxY = 0;
+            this.info.antX = 0;
+            this.info.antY = 0;
 
             //  Set the status.
             currentState = 'paused';
-            $scope.render();
+            this.render();
         };
 
-        $scope.pause = function() {
+        this.pause = function() {
 
             //  If we're already paused, there's nothing to do.
             if(currentState === 'paused') {
@@ -102,28 +123,31 @@ angular.module('langtonsant.controllers', [])
             currentState = 'paused';
         };
 
-        $scope.removeState = function(state) {
-            var index = $scope.states.indexOf(state);
+        this.removeState = function(state) {
+            var index = this.states.indexOf(state);
             if(index !== -1) {
-                $scope.states.splice(index, 1);
+                this.states.splice(index, 1);
             }
         };
 
-        $scope.addState = function() {
-            $scope.states.push($scope.newState);
-            $scope.newState = {direction:'L', colour:"#FFFFFF"};
+        this.addState = function() {
+            this.states.push(this.newState);
+            this.newState = {direction:'L', colour:"#FFFFFF"};
         };
 
-        $scope.moveLeft = function(tiles) {
-            $scope.offsetX -= tiles || 1;
+        this.moveLeft = function(tiles) {
+            simulation.offsetX -= tiles || 1;
         };
-        $scope.moveRight = function(tiles) {
-            $scope.offsetX += tiles || 1;
+        this.moveRight = function(tiles) {
+            simulation.offsetX += tiles || 1;
         };
-        $scope.moveUp = function(tiles) {
-            $scope.offsetY -= tiles || 1;
+        this.moveUp = function(tiles) {
+            simulation.offsetY -= tiles || 1;
         };
-        $scope.moveDown = function(tiles) {
-            $scope.offsetY += tiles || 1;
+        this.moveDown = function(tiles) {
+            simulation.offsetY += tiles || 1;
+        };
+        this.moveOrigin = function() {
+            simulation.offsetX = simulation.offsetY = 0;
         };
     });
