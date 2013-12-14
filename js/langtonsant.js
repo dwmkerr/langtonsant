@@ -80,9 +80,9 @@ function LangtonsAnt() {
 	//	Take a step forwards.
 	this.stepForwards = function() {
 
-		//	Get the state of the tile that the ant is on and update that tile.
+		//	Get the state of the tile that the ant is on, this'll let
+        //  us determine the direction to move in.
 		var state = this.getTileState(this.antPosition.x, this.antPosition.y);
-		this.advanceTile(this.antPosition.x, this.antPosition.y);
 
 		//	Change direction.
 		if(state.direction === 'L') {
@@ -103,6 +103,10 @@ function LangtonsAnt() {
 		else {
 			this.antPosition.x--;
 		}
+
+        //  Now we can advance the tile.
+        this.advanceTile(this.antPosition.x, this.antPosition.y);
+
 		this.ticks++;
 	};
 
@@ -219,7 +223,7 @@ function LangtonsAnt() {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
-       	
+
         var axisLength = 50 * this.zoomFactor;
 
         ctx.beginPath();

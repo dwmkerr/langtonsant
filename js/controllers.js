@@ -1,6 +1,7 @@
 //  All controllers go in the langtonsant.controllers module.
 angular.module('langtonsant.controllers', [])
-    .controller('MainController', function($scope, $interval, $document) {
+    .controller('MainController', function($scope, $interval, $timeout, $document) {
+        var self = this;
 
         //  Scope variables - can be bound in the view.
 
@@ -40,15 +41,15 @@ angular.module('langtonsant.controllers', [])
         var canvas = null;
 
         //  When the document is ready, we'll grab the antcanvas.
-        $document.ready(function() {
+        $timeout(function() {
             canvas = document.getElementById('antcanvas');
+            self.render();
         });
 
         //  Initialise the simulation with the states.
         simulation.initialise({states: this.states});
 
         //  Runs the simulation.
-        var self = this;
         this.run = function() {
             //  If we're already running, we can't start the simulation.
             if(currentState === 'running') {
@@ -137,23 +138,30 @@ angular.module('langtonsant.controllers', [])
 
         this.moveLeft = function(tiles) {
             simulation.offsetX -= tiles || 1;
+            this.render();
         };
         this.moveRight = function(tiles) {
             simulation.offsetX += tiles || 1;
+            this.render();
         };
         this.moveUp = function(tiles) {
             simulation.offsetY -= tiles || 1;
+            this.render();
         };
         this.moveDown = function(tiles) {
             simulation.offsetY += tiles || 1;
+            this.render();
         };
         this.moveOrigin = function() {
             simulation.offsetX = simulation.offsetY = 0;
+            this.render();
         };
         this.zoomIn = function() {
             simulation.zoomFactor *= 1.1;
+            this.render();
         };
         this.zoomOut = function() {
             simulation.zoomFactor *= 0.9;
+            this.render();
         };
     });

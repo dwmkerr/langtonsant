@@ -11,14 +11,15 @@ TODO
  * DONE: Change Start/Stop/Pause/Resume etc to just Run/Pause
  * DONE: Enable Pan
  * DONE: Enable Zoom
- * ZONE: Draw Ant as triangle showing direction.
- * Initial draw on DOM loaded.
- * Style toolbar
- * Toggle to show advanced panel.
- * Make into real Angular app.
+ * DONE: Draw Ant as triangle showing direction.
+ * DONE: Initial draw on DOM loaded.
+ * DONE: Redraw on zoom/move/etc
+ * DONE: Style toolbar
+ * DONE: Toggle to show advanced panel.
+ * DONE: Make into real Angular app.
  * Custom directive for a colour picker.
  * Default colours.
- * Wikipedia link
+ * DONE: Wikipedia link
  * Style advanced panel
  * Write tests
  * Write article

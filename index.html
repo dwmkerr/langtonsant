@@ -26,16 +26,12 @@
 
 
 			#controls {
-				width: 250px;
 				position: fixed;
 				left: 20px;
 				top: 20px;
-				background: #cdcdcd;
-				opacity: 10%;
 			}
 
             #locationControls {
-                width: 250px;
                 position: fixed;
                 right: 20px;
                 top: 20px;
@@ -119,14 +115,6 @@
 
 	<script>
 
-		function redraw() {
-            // try and get the service injector. if we can, we can re-render.
-            var scope = angular.element(document.getElementById('antcanvas')).scope();
-            if(scope !== null && scope !== undefined) {
-                scope.render();
-            }
-		}
-
 		//	Setup the canvas.
 		var canvas = document.getElementById("antcanvas");
 		function sizeCanvasToWindow() {
@@ -136,11 +124,13 @@
 
 		window.addEventListener('resize', function resize(event) {
 			sizeCanvasToWindow();
-			redraw();
+            // try and get the service injector. if we can, we can re-render.
+            var scope = angular.element(document.getElementById('antcanvas')).scope();
+            if(scope !== null && scope !== undefined) {
+                scope.render();
+            }
 		});
 		sizeCanvasToWindow();
-
-		document.addEventListener("DOMContentLoaded", redraw(), false);
 
 	</script>
 	<script type="text/javascript">
