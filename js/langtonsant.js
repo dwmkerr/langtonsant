@@ -146,8 +146,9 @@ function LangtonsAnt() {
         ctx.fillStyle = backgroundColour;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        //	We're going to draw each square with a given edge size.
-        var tileSize = 25 * this.zoomFactor;
+        //	We're going to draw each square with a given edge size
+        var baseTileSize = 25;
+        var tileSize = baseTileSize * this.zoomFactor;
 
         //	Useful variables for when we're drawing...
         var width = canvas.width,
@@ -205,8 +206,20 @@ function LangtonsAnt() {
             antY = originY + this.antPosition.y * tileSize;
 
        	ctx.fillStyle = '#ff0000';
-       	ctx.fillRect(antX - 8, antY - 8, 16, 16);
 
+        //  Tranform before we draw the ant, it makes it easier.
+        ctx.save();
+        ctx.translate(antX, antY);
+        ctx.scale(this.zoomFactor, this.zoomFactor);
+        ctx.rotate((this.antDirection / 180) * Math.PI);
+        ctx.beginPath();
+        ctx.moveTo(-(baseTileSize-8)/2, (baseTileSize-4)/2);
+        ctx.lineTo(+(baseTileSize-8)/2, (baseTileSize-4)/2);
+        ctx.lineTo(0, -(baseTileSize-4)/2);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+       	
         var axisLength = 50 * this.zoomFactor;
 
         ctx.beginPath();
