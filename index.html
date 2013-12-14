@@ -84,15 +84,15 @@
                     </thead>
                     <tr ng-repeat="state in main.states">
                         <div class="row">
-                            <td>{{state.direction}}</td>
+                            <td><la-leftright value="state.direction"></la-leftright></td>
                             <td><la-colourpicker colour="state.colour"></la-colourpicker></td>
                             <td><a href="" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </div>
                     </tr>
                     <tr>
                         <div class="row">
-                        <td><input type="text" ng-model="main.newState.direction"/></td>
-                        <td><input type="text" ng-model="main.newState.colour"/></td>
+                        <td><la-leftright value="main.newState.direction"></la-leftright></td>
+                        <td><la-colourpicker colour="main.newState.colour"></la-colourpicker></td>
                         <td><a href="" ng-click="main.addState()"><span class="glyphicon glyphicon-plus"></span></a></td>
                         </div>
                     </tr>

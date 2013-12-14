@@ -144,6 +144,9 @@ function LangtonsAnt() {
 
         //	Get the drawing context.
         var ctx = canvas.getContext("2d");
+        ctx.save();
+        ctx.scale(1,-1);
+        ctx.translate(0, -canvas.height);
 
         //	Draw the background.
         var backgroundColour = '#FFFFFF';
@@ -217,9 +220,9 @@ function LangtonsAnt() {
         ctx.scale(this.zoomFactor, this.zoomFactor);
         ctx.rotate((this.antDirection / 180) * Math.PI);
         ctx.beginPath();
-        ctx.moveTo(-(baseTileSize-8)/2, (baseTileSize-4)/2);
-        ctx.lineTo(+(baseTileSize-8)/2, (baseTileSize-4)/2);
-        ctx.lineTo(0, -(baseTileSize-4)/2);
+        ctx.moveTo(-(baseTileSize-8)/2, -(baseTileSize-4)/2);
+        ctx.lineTo(+(baseTileSize-8)/2, -(baseTileSize-4)/2);
+        ctx.lineTo(0, (baseTileSize-4)/2);
         ctx.fill();
         ctx.closePath();
         ctx.restore();
@@ -227,11 +230,13 @@ function LangtonsAnt() {
         var axisLength = 50 * this.zoomFactor;
 
         ctx.beginPath();
-        ctx.moveTo(originX-axisLength,originY);
+        ctx.moveTo(originX,originY);
         ctx.lineTo(originX+axisLength,originY);
-        ctx.moveTo(originX,originY-axisLength);
+        ctx.moveTo(originX,originY);
         ctx.lineTo(originX,originY+axisLength);
         ctx.closePath();
         ctx.stroke();
+
+        ctx.restore();
     };
 }

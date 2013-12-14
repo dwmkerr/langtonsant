@@ -5,6 +5,15 @@ angular.module('langtonsant.directives', [])
             scope: {
                 'colour': '='
             },
-            templateUrl: "js/laColourPickerTemplate.html"  //  Use the appropriate html file for the template.
+            templateUrl: "js/laColourPickertemplate.html"  //  Use the appropriate html file for the template.
+        };
+    })
+    .directive('laLeftright', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                'value': '='
+            },
+            templateUrl: "js/laLeftright.html"
         };
     });
