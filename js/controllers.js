@@ -1,12 +1,9 @@
 //  All controllers go in the langtonsant.controllers module.
 angular.module('langtonsant.controllers', [])
-    .controller('MainController', function($scope, $interval, $timeout, $document) {
+    .controller('MainController', function($scope, $interval, $timeout) {
         var self = this;
 
         //  Scope variables - can be bound in the view.
-
-        //  Do we show advanced settings?
-        this.showSettings = false;
 
         //  The frequency of simulation ticks
         this.tickFrequency = 10;
@@ -76,10 +73,6 @@ angular.module('langtonsant.controllers', [])
         this.getCurrentState = function() {
             return currentState;
         };
-
-        this.toggleShowSettings = function() {
-            this.showSettings = this.showSettings === true ? false : true;
-        }
 
         this.render = function() {
             if(canvas !== null && canvas !== undefined) {

@@ -1,152 +1,193 @@
 <!DOCTYPE html>
 <html ng-app="langtonsant">
-	<head>
-		<title>Langton's Ant</title>
-		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="js/langtonsant.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/controllers.js"></script>
-        <script src="js/directives.js"></script>
-        <script src="js/services.js"></script>
-		<style>
-	
-			/* Styling needed for a fullscreen canvas and no scrollbars. */
-			body, html { 
-		    width: 100%;
-		    height: 100%;
-		    margin: 0;
-		    padding: 0;
-		    overflow: hidden;
-			}
+<head>
+    <title>Langton's Ant</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="js/langtonsant.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/services.js"></script>
+    <style>
 
-			#antcanvas { 
-				display:block;
-			}
+        /* Styling needed for a fullscreen canvas and no scrollbars. */
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
+        #antcanvas {
+            display: block;
+        }
 
-			#controls {
-				position: fixed;
-				left: 20px;
-				top: 20px;
-			}
+        #controls {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+        }
 
-            #locationControls {
-                position: fixed;
-                right: 20px;
-                top: 20px;
-            }
+        #locationControls {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+        }
 
-			#info {
-				position: fixed;
-				bottom: 0;
-				right: 0;
-				margin-bottom: 20px;
-				margin-right: 20px;
-			}
-		</style>
-	</head>
+        #info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
 <body>
-	<canvas id="antcanvas"></canvas>
-	<div id="controls" ng-controller="MainController as main">
-		<div>
-			<button type="button" ng-click="main.getCurrentState() == 'running' ? main.pause() : main.run()"
-                    class="btn btn-default">
-                <span ng-show="main.getCurrentState() == 'running'" class="glyphicon glyphicon-pause"></span>
-                <span ng-show="main.getCurrentState() != 'running'" class="glyphicon glyphicon-play"></span>
-			</button>
-            <button type="button" ng-click="main.reset()"
-                    class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
-            <button type="button" ng-click="main.toggleShowSettings()"
-                    class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
-		</div>
-		<div id="advanced" ng-show="main.showSettings">
-            <p><label for="tps">Ticks/second</label>
-            	<input id="tps" type="text" ng-model="main.tickFrequency"></p>
-            <p>Ticks: {{main.info.currentTicks}}<br />
-                Status: {{main.getCurrentState() }} <br />
-            	Universe Bounds: {{main.info.currentMinX}} &lt; x &lt; {{main.info.currentMaxX}}<br />
-            	{{main.info.currentMinY}} &lt; y &lt; {{main.info.currentMaxY}}</p>
-            	<p>Ant: ({{main.info.antX}}, {{main.info.antY}})</p>
-            	<table>
-            		<thead>
-            			<tr><td>Direction</td><td>Colour</td><td></td></tr>
-            		</thead>
-            		<tr ng-repeat="state in main.states">
-            			<td>{{state.direction}}</td>
-            			<td>{{state.colour}}</td>
-            			<td><a href="" ng-click="main.removeState(state)">X</a></td>
-            		</tr>
-            		<tr>
-            			<td><input type="text" ng-model="main.newState.direction" /></td>
-            			<td><input type="text" ng-model="main.newState.colour" /></td>
-            			<td><a href="" ng-click="main.addState()">Add</a></td>
-            		</tr>
-            	</table>
-		</div>
-        <div id="locationControls">
-            <table>
-                <tr>
-                    <td></td>
-                    <td><button class="btn btn-default" title="Move Up" ng-click="main.moveUp()"><span class="glyphicon glyphicon-arrow-up"></span></button></td>
-                    <td></td>
-                    <td><button class="btn btn-default" title="Zoom In" ng-click="main.zoomIn()"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-                </tr>
-                <tr>
-                    <td><button class="btn btn-default" title="Move Left" ng-click="main.moveLeft()"><span class="glyphicon glyphicon-arrow-left"></span></button></td>
-                    <td><button class="btn btn-default" title="Go to Centre" ng-click="main.moveOrigin()"><span class="glyphicon glyphicon-move"></span></button></td>
-                    <td><button class="btn btn-default" title="Move Right"  ng-click="main.moveRight()"><span class="glyphicon glyphicon-arrow-right"></span></button></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><button class="btn btn-default" title="Move Down" ng-click="main.moveDown()"><span class="glyphicon glyphicon-arrow-down"></span></button></td>
-                    <td></td>
-                    <td><button class="btn btn-default" title="Zoom Out" ng-click="main.zoomOut()"><span class="glyphicon glyphicon-zoom-out"></span></button></td>
-                </tr>
-            </table>
+<canvas id="antcanvas"></canvas>
+<div id="controls" ng-controller="MainController as main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div>
+                <button type="button" ng-click="main.getCurrentState() == 'running' ? main.pause() : main.run()"
+                        class="btn btn-default">
+                    <span ng-show="main.getCurrentState() == 'running'" class="glyphicon glyphicon-pause"></span>
+                    <span ng-show="main.getCurrentState() != 'running'" class="glyphicon glyphicon-play"></span>
+                </button>
+                <button type="button" ng-click="main.reset()"
+                        class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
+                <button type="button" data-toggle="collapse" data-target="#collapseSettings"
+                        class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
+            </div>
         </div>
-	</div>
-	<div id="info">
-		<p>	<a href="http://en.wikipedia.org/wiki/Langton's_ant">what is langton's ant</a> |
-            <a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> |
-			<a href="http://www.dwmkerr.com/experiments">more experiments</a> | <a href="http://www.dwmkerr.com">dwmkerr.com</a></p>
-	</div>
+        <div id="collapseSettings" class="panel-collapse collapse">
+            <div class="panel-body">
 
-	<script>
+                <p><label for="tps">Ticks/second</label>
+                    <input id="tps" type="text" ng-model="main.tickFrequency"></p>
 
-		//	Setup the canvas.
-		var canvas = document.getElementById("antcanvas");
-		function sizeCanvasToWindow() {
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
-		}
+                <p>Ticks: {{main.info.currentTicks}}<br/>
+                    Status: {{main.getCurrentState() }} <br/>
+                    Universe Bounds: {{main.info.currentMinX}} &lt; x &lt; {{main.info.currentMaxX}}<br/>
+                    {{main.info.currentMinY}} &lt; y &lt; {{main.info.currentMaxY}}</p>
 
-		window.addEventListener('resize', function resize(event) {
-			sizeCanvasToWindow();
-            // try and get the service injector. if we can, we can re-render.
-            var scope = angular.element(document.getElementById('antcanvas')).scope();
-            if(scope !== null && scope !== undefined) {
-                scope.render();
-            }
-		});
-		sizeCanvasToWindow();
+                <p>Ant: ({{main.info.antX}}, {{main.info.antY}})</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <div class="row">
+                        <td>Direction</td>
+                        <td>Colour</td>
+                        <td></td>
+                        </div>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="state in main.states">
+                        <div class="row">
+                            <td>{{state.direction}}</td>
+                            <td><la-colourpicker colour="state.colour"></la-colourpicker></td>
+                            <td><a href="" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="row">
+                        <td><input type="text" ng-model="main.newState.direction"/></td>
+                        <td><input type="text" ng-model="main.newState.colour"/></td>
+                        <td><a href="" ng-click="main.addState()"><span class="glyphicon glyphicon-plus"></span></a></td>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="locationControls">
+        <table>
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-default" title="Move Up" ng-click="main.moveUp()"><span
+                            class="glyphicon glyphicon-arrow-up"></span></button>
+                </td>
+                <td></td>
+                <td>
+                    <button class="btn btn-default" title="Zoom In" ng-click="main.zoomIn()"><span
+                            class="glyphicon glyphicon-zoom-in"></span></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-default" title="Move Left" ng-click="main.moveLeft()"><span
+                            class="glyphicon glyphicon-arrow-left"></span></button>
+                </td>
+                <td>
+                    <button class="btn btn-default" title="Go to Centre" ng-click="main.moveOrigin()"><span
+                            class="glyphicon glyphicon-move"></span></button>
+                </td>
+                <td>
+                    <button class="btn btn-default" title="Move Right" ng-click="main.moveRight()"><span
+                            class="glyphicon glyphicon-arrow-right"></span></button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-default" title="Move Down" ng-click="main.moveDown()"><span
+                            class="glyphicon glyphicon-arrow-down"></span></button>
+                </td>
+                <td></td>
+                <td>
+                    <button class="btn btn-default" title="Zoom Out" ng-click="main.zoomOut()"><span
+                            class="glyphicon glyphicon-zoom-out"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="info">
+    <p><a href="http://en.wikipedia.org/wiki/Langton's_ant">what is langton's ant</a> |
+        <a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> |
+        <a href="http://www.dwmkerr.com/experiments">more experiments</a> | <a
+                href="http://www.dwmkerr.com">dwmkerr.com</a></p>
+</div>
 
-	</script>
-	<script type="text/javascript">
+<script>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-41728580-1']);
-  _gaq.push(['_trackPageview']);
+    //	Setup the canvas.
+    var canvas = document.getElementById("antcanvas");
+    function sizeCanvasToWindow() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    window.addEventListener('resize', function resize(event) {
+        sizeCanvasToWindow();
+        // try and get the service injector. if we can, we can re-render.
+        var scope = angular.element(document.getElementById('antcanvas')).scope();
+        if (scope !== null && scope !== undefined) {
+            scope.render();
+        }
+    });
+    sizeCanvasToWindow();
 
 </script>
-    <script src="bower_components/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41728580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<script src="bower_components/jquery/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
