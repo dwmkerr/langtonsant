@@ -34,9 +34,10 @@ function LangtonsAnt() {
 	//	The number of ticks.
 	this.ticks = 0;
 
-    //  The offset.
+    //  The offset and current zoom factor.
     this.offsetX = 0;
     this.offsetY = 0;
+    this.zoomFactor = 1.0;
 
 	//	Gets a tile state index.
 	this.getTileStateIndex = function(x, y) {
@@ -50,7 +51,7 @@ function LangtonsAnt() {
 	//	Gets a tile state.
 	this.getTileState = function(x, y) {
 		return this.states[this.getTileStateIndex(x, y)];
-	}
+	};
 
 	//	Set a tile state index.
 	this.setTileStateIndex = function(x, y, stateIndex) {
@@ -141,12 +142,12 @@ function LangtonsAnt() {
         var ctx = canvas.getContext("2d");
 
         //	Draw the background.
-        var backgroundColour = '#FFFFFF'
+        var backgroundColour = '#FFFFFF';
         ctx.fillStyle = backgroundColour;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         //	We're going to draw each square with a given edge size.
-        var tileSize = 25;
+        var tileSize = 25 * this.zoomFactor;
 
         //	Useful variables for when we're drawing...
         var width = canvas.width,
@@ -206,11 +207,13 @@ function LangtonsAnt() {
        	ctx.fillStyle = '#ff0000';
        	ctx.fillRect(antX - 8, antY - 8, 16, 16);
 
+        var axisLength = 50 * this.zoomFactor;
+
         ctx.beginPath();
-        ctx.moveTo(originX-50,originY);
-        ctx.lineTo(originX+50,originY);
-        ctx.moveTo(originX,originY-50);
-        ctx.lineTo(originX,originY+50);
+        ctx.moveTo(originX-axisLength,originY);
+        ctx.lineTo(originX+axisLength,originY);
+        ctx.moveTo(originX,originY-axisLength);
+        ctx.lineTo(originX,originY+axisLength);
         ctx.closePath();
         ctx.stroke();
     };

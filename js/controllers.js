@@ -150,4 +150,10 @@ angular.module('langtonsant.controllers', [])
         this.moveOrigin = function() {
             simulation.offsetX = simulation.offsetY = 0;
         };
+        this.zoomIn = function() {
+            simulation.zoomFactor *= 1.1;
+        };
+        this.zoomOut = function() {
+            simulation.zoomFactor *= 0.9;
+        };
     });

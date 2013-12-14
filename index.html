@@ -67,7 +67,7 @@
 		<div id="advanced" ng-show="main.showSettings">
             <p><label for="tps">Ticks/second</label>
             	<input id="tps" type="text" ng-model="main.tickFrequency"></p>
-            <p>Ticks: {{main.currentTicks}}<br />
+            <p>Ticks: {{main.info.currentTicks}}<br />
                 Status: {{main.getCurrentState() }} <br />
             	Universe Bounds: {{main.info.currentMinX}} &lt; x &lt; {{main.info.currentMaxX}}<br />
             	{{main.info.currentMinY}} &lt; y &lt; {{main.info.currentMaxY}}</p>
@@ -94,7 +94,7 @@
                     <td></td>
                     <td><button class="btn btn-default" title="Move Up" ng-click="main.moveUp()"><span class="glyphicon glyphicon-arrow-up"></span></button></td>
                     <td></td>
-                    <td><button class="btn btn-default" title="Zoom In"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+                    <td><button class="btn btn-default" title="Zoom In" ng-click="main.zoomIn()"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
                 </tr>
                 <tr>
                     <td><button class="btn btn-default" title="Move Left" ng-click="main.moveLeft()"><span class="glyphicon glyphicon-arrow-left"></span></button></td>
@@ -106,13 +106,14 @@
                     <td></td>
                     <td><button class="btn btn-default" title="Move Down" ng-click="main.moveDown()"><span class="glyphicon glyphicon-arrow-down"></span></button></td>
                     <td></td>
-                    <td><button class="btn btn-default" title="Zoom Out"><span class="glyphicon glyphicon-zoom-out"></span></button></td>
+                    <td><button class="btn btn-default" title="Zoom Out" ng-click="main.zoomOut()"><span class="glyphicon glyphicon-zoom-out"></span></button></td>
                 </tr>
             </table>
         </div>
 	</div>
 	<div id="info">
-		<p>	<a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> | 
+		<p>	<a href="http://en.wikipedia.org/wiki/Langton's_ant">what is langton's ant</a> |
+            <a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> |
 			<a href="http://www.dwmkerr.com/experiments">more experiments</a> | <a href="http://www.dwmkerr.com">dwmkerr.com</a></p>
 	</div>
 
