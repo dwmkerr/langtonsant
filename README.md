@@ -11,20 +11,8 @@ Langton's Ant is a simple simulation in which we create a basic set of rules and
 Getting Started
 ---------------
 
-It's easy! 
-
 1. Clone the repository.
-
 2. If you don't have it, install [NodeJS](http://nodejs.org/).
-
-3. If you don't have it, install [Bower](http://bower.io/) globally.
-   ````
-   npm install -g bower
-   ````
-
-4. Install the bower packages needed for the project.
-   ````
-   bower install
-   ````
-
-5. Open index.html!
+3. If you don't have it, install [Bower](http://bower.io/) globally with ````npm install -g bower````.
+4. Open the client folder and install bower packages needed for the project with ````bower install````.
+5. Open index.html! Optionally run the server from the root with ````npm start```` and go to http://localhost:3000/ 
