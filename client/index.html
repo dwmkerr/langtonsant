@@ -8,7 +8,6 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
-    <script src="js/services.js"></script>
     <style>
 
         /* Styling needed for a fullscreen canvas and no scrollbars. */
@@ -91,26 +90,22 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <div class="row">
                         <td>Direction</td>
                         <td>Colour</td>
                         <td></td>
-                        </div>
                     </tr>
                     </thead>
                     <tr ng-repeat="state in main.states">
                         <div class="row">
                             <td class="col-sm-4"><la-leftright value="state.direction"></la-leftright></td>
                             <td class="col-sm-7"><la-colourpicker colour="state.colour"></la-colourpicker></td>
-                            <td class="col-sm-1"><a href="" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td class="col-sm-1"><a href="" ng-hide="$first" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </div>
                     </tr>
                     <tr>
-                        <div class="row">
                         <td></td>
                         <td></td>
                         <td><a href="" ng-click="main.addState()"><span class="glyphicon glyphicon-plus"></span></a></td>
-                        </div>
                     </tr>
                 </table>
             </div>

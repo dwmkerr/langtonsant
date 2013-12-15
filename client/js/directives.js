@@ -1,7 +1,7 @@
 angular.module('langtonsant.directives', [])
     .directive('laColourpicker', function() {
         return {
-            restrict: 'EA',                              //  Match elements,
+            restrict: 'E',                              //  Match elements,
             scope: {
                 'colour': '='
             },
