@@ -227,8 +227,10 @@ function LangtonsAnt() {
         ctx.closePath();
         ctx.restore();
 
-        var axisLength = 50 * this.zoomFactor;
 
+        //  Uncomment to draw the axis...
+        /*
+        var axisLength = 50 * this.zoomFactor;
         ctx.beginPath();
         ctx.moveTo(originX,originY);
         ctx.lineTo(originX+axisLength,originY);
@@ -236,7 +238,7 @@ function LangtonsAnt() {
         ctx.lineTo(originX,originY+axisLength);
         ctx.closePath();
         ctx.stroke();
-
+        */
         ctx.restore();
     };
 }

@@ -30,6 +30,10 @@
             top: 20px;
         }
 
+        #collapseSettings {
+            width: 420px;
+        }
+
         #locationControls {
             position: fixed;
             right: 20px;
@@ -63,16 +67,28 @@
         <div id="collapseSettings" class="panel-collapse collapse">
             <div class="panel-body">
 
-                <p><label for="tps">Ticks/second</label>
-                    <input id="tps" type="text" ng-model="main.tickFrequency"></p>
+                <div class="row">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="tps" class="col-sm-5 control-label">Ticks/Sec</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="tps" ng-model="main.tickFrequency">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticks" class="col-sm-5 control-label">Ticks</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="ticks" readonly ng-model="main.info.currentTicks">
+                        </div>
+                    </div>
+                </form>
+                </div>
 
-                <p>Ticks: {{main.info.currentTicks}}<br/>
-                    Status: {{main.getCurrentState() }} <br/>
-                    Universe Bounds: {{main.info.currentMinX}} &lt; x &lt; {{main.info.currentMaxX}}<br/>
-                    {{main.info.currentMinY}} &lt; y &lt; {{main.info.currentMaxY}}</p>
+                <p>The table below defines the laws of the Universe. The ant moves one space
+                forwards. When it leaves a square, it turns left or right depending on the colour
+                of the square. It then changes the colour of the square to the next in the list.</p>
 
-                <p>Ant: ({{main.info.antX}}, {{main.info.antY}})</p>
-                <table>
+                <table class="table">
                     <thead>
                     <tr>
                         <div class="row">
@@ -84,15 +100,15 @@
                     </thead>
                     <tr ng-repeat="state in main.states">
                         <div class="row">
-                            <td><la-leftright value="state.direction"></la-leftright></td>
-                            <td><la-colourpicker colour="state.colour"></la-colourpicker></td>
-                            <td><a href="" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td class="col-sm-4"><la-leftright value="state.direction"></la-leftright></td>
+                            <td class="col-sm-7"><la-colourpicker colour="state.colour"></la-colourpicker></td>
+                            <td class="col-sm-1"><a href="" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </div>
                     </tr>
                     <tr>
                         <div class="row">
-                        <td><la-leftright value="main.newState.direction"></la-leftright></td>
-                        <td><la-colourpicker colour="main.newState.colour"></la-colourpicker></td>
+                        <td></td>
+                        <td></td>
                         <td><a href="" ng-click="main.addState()"><span class="glyphicon glyphicon-plus"></span></a></td>
                         </div>
                     </tr>

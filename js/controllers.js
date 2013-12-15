@@ -8,27 +8,24 @@ angular.module('langtonsant.controllers', [])
         //  The frequency of simulation ticks
         this.tickFrequency = 10;
 
-        //  Available tile states.
-        this.states = [
-            {direction:'L', colour: '#FFFFFF'},
-            {direction:'R', colour: '#000000'}
+        //  The set of default colours for states.
+        this.defaultStateColours = [
+            '#FFFFFF',
+            '#49708A',
+            '#88ABC2',
+            '#D0E0EB',
+            '#EBF7F8'
         ];
 
-        //  Current (new) state that's being edited.
-        this.newState = {
-            direction: 'L',
-            colour: '#336600'
-        };
+        //  Available tile states.
+        this.states = [
+            {direction:'L', colour: this.defaultStateColours[0]},
+            {direction:'R', colour: this.defaultStateColours[1]}
+        ];
 
         //  Simulatio info.
         this.info = {
-            currentTicks: 0,
-            currentMinX: 0,
-            currentMaxX: 0,
-            currentMinY: 0,
-            currentMaxY: 0,
-            antX: 0,
-            antY: 0
+            currentTicks: 0
         };
 
         //  None scope variables. These are used by the controller, but not exposed.
@@ -57,12 +54,6 @@ angular.module('langtonsant.controllers', [])
             tickIntervalId = $interval(function() {
                 simulation.stepForwards();
                 self.info.currentTicks = simulation.ticks;
-                self.info.currentMinX = simulation.bounds.xMin;
-                self.info.currentMaxX = simulation.bounds.xMax;
-                self.info.currentMinY = simulation.bounds.yMin;
-                self.info.currentMaxY = simulation.bounds.yMax;
-                self.info.antX = simulation.antPosition.x;
-                self.info.antY = simulation.antPosition.y;
                 self.render();
             }, 1000 / this.tickFrequency);
 
@@ -91,12 +82,6 @@ angular.module('langtonsant.controllers', [])
             simulation = new LangtonsAnt();
             simulation.initialise({states: this.states});
             this.info.currentTicks = 0;
-            this.info.currentMinX = 0;
-            this.info.currentMaxX = 0;
-            this.info.currentMinY = 0;
-            this.info.currentMaxY = 0;
-            this.info.antX = 0;
-            this.info.antY = 0;
 
             //  Set the status.
             currentState = 'paused';
@@ -125,8 +110,12 @@ angular.module('langtonsant.controllers', [])
         };
 
         this.addState = function() {
-            this.states.push(this.newState);
-            this.newState = {direction:'L', colour:"#FFFFFF"};
+            //  Create a new state with the next colour in the list.
+            var colourIndex = this.states.length % this.defaultStateColours.length;
+            this.states.push({
+                direction: 'L',
+                colour: this.defaultStateColours[colourIndex]
+            });
         };
 
         this.moveLeft = function(tiles) {

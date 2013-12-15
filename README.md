@@ -17,10 +17,12 @@ TODO
  * DONE: Style toolbar
  * DONE: Toggle to show advanced panel.
  * DONE: Make into real Angular app.
- * Custom directive for a colour picker.
- * Default colours.
+ * DONE: Custom directive for a colour picker.
+ * DONE: Default colours.
  * DONE: Wikipedia link
- * Style advanced panel
+ * DONE: Style advanced panel
  * Write tests
  * Write article
  * Publish
+ * Share Ant button
+ * Example configurations
