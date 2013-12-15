@@ -1,10 +1,9 @@
 Langton's Ant
 =============
 
-Langton's Ant is a simple simulation in which we create a basic set of rules and apply them to a little universe. 
+[Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simple simulation in which we create a basic set of rules and apply them to a little universe. 
 
- * [Read more on wikipedia](http://en.wikipedia.org/wiki/Langton's_ant)
- * [Try it out](http://www.dwmkerr.com/experiments/langtonsant/langtonsant.jpg)
+[Try it in your browser now](http://www.dwmkerr.com/experiments/langtonsant/)
 
 ![Langton's Ant](http://www.dwmkerr.com/experiments/langtonsant/langtonsant.jpg)
 
