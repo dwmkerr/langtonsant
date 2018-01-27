@@ -5,7 +5,7 @@
     "test": "vows --spec --isolate"
   },
   "dependencies" : {
-    "express" : "3.4.x"
+    "express" : "~4.16.2"
   },
   "devDependencies": {
   }
