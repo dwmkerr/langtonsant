@@ -1,6 +1,8 @@
 Langton's Ant
 =============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dwmkerr/langtonsant.svg)](https://greenkeeper.io/)
+
 [Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simple simulation in which we create a basic set of rules and apply them to a little universe. 
 
 [Try it in your browser now](http://www.dwmkerr.com/experiments/langtonsant/)
