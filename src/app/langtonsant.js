@@ -242,3 +242,5 @@ function LangtonsAnt() {
         ctx.restore();
     };
 }
+
+export default LangtonsAnt;
