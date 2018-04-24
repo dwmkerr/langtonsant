@@ -62,6 +62,12 @@ class MainController {
       currentState = 'running';
     };
 
+    this.tick = function() {
+      simulation.stepForwards();
+      self.info.currentTicks = simulation.ticks;
+      self.render();
+    };
+
     this.getCurrentState = function() {
       return currentState;
     };

@@ -121,20 +121,20 @@ function LangtonsAnt() {
         }
         this.antDirection %= 360;
 
+        //  Now we can advance the tile.
+        this.advanceTile(this.antPosition.x, this.antPosition.y);
+
         //  Move the ant.
         if(this.antDirection === 0) {
             this.antPosition.y++;
         } else if (this.antDirection === 90 || this.antDirection === -270) {
-            this.antPosition.x++;
+            this.antPosition.x--;
         } else if (this.antDirection === 180 || this.antDirection === -180) {
             this.antPosition.y--;
         }
         else {
-            this.antPosition.x--;
+            this.antPosition.x++;
         }
-
-        //  Now we can advance the tile.
-        this.advanceTile(this.antPosition.x, this.antPosition.y);
 
         this.ticks++;
     };
@@ -229,7 +229,6 @@ function LangtonsAnt() {
 
 
         //  Uncomment to draw the axis...
-        /*
         var axisLength = 50 * this.zoomFactor;
         ctx.beginPath();
         ctx.moveTo(originX,originY);
@@ -238,7 +237,7 @@ function LangtonsAnt() {
         ctx.lineTo(originX,originY+axisLength);
         ctx.closePath();
         ctx.stroke();
-        */
+
         ctx.restore();
     };
 }
