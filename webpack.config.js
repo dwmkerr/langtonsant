@@ -15,12 +15,12 @@ module.exports = {
       template: './src/index.html',
       inject: 'body'
     }),
-    // new webpack.ProvidePlugin({
-    // $: 'jquery',
-    // jQuery: 'jquery',
-    // 'window.jQuery': 'jquery',
+    new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    'window.jQuery': 'jquery',
     // angular: 'angular',
-    // })
+    })
   ],
   module: {
     rules: [
