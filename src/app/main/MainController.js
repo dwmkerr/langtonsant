@@ -61,11 +61,24 @@ class MainController {
       '#49708A',
       '#88ABC2',
       '#D0E0EB',
-      '#EBF7F8'
+      '#EBF7F8',
+      '#FFFFFF66',
+      '#49708A66',
+      '#88ABC266',
+      '#D0E0EB66',
+      '#EBF7F866'
+    ];
+
+    //  Same as above, but for the ant.
+    this.antStateColours = [
+      '#FF708A',
+      '#FFABC2',
+      '#FFE0EB',
+      '#FFF7F8'
     ];
 
     //  Available tile states, with the corresponding Turk/Propp configuration.
-    this.configuration = 'LLRR';
+    this.configuration = 'LR';
     this.states = configurationToStates(this.configuration);
 
     //  None scope variables. These are used by the controller, but not exposed.
@@ -140,6 +153,7 @@ class MainController {
         //  Use the 2D rendering function.
         render(self.universe, canvas, {
           tileStateColours: self.tileStateColours,
+          antStateColours: self.antStateColours,
           zoomFactor: self.zoomFactor,
           offsetX: self.offsetX,
           offsetY: self.offsetY
