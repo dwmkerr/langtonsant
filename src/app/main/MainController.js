@@ -1,6 +1,21 @@
 
 import LangtonsAnt from '../langtonsant.js';
 
+function frequencyInterval(frequency) {
+  //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
+  //  be cropped down. 150Hz becomes 7.5Hz with 2 ticks per iteration.
+  let f = frequency;
+  let i = 1000 / f;
+  let t = 1;
+  while ( i < 10 ) {
+    f = f / 2;
+    i = 1000 / f;
+    t = t * 2;
+  }
+
+  return { f, i, t };
+}
+
 class MainController {
   constructor($scope, $timeout) {
     const self = this;
@@ -53,22 +68,25 @@ class MainController {
       }
 
       //  Start the timer.
-      tickIntervalId = setInterval(this.tick,
-        1000 / this.tickFrequency);
+      const { i } = frequencyInterval(self.tickFrequency);
+      tickIntervalId = setInterval(this.tick, i);
 
       //  Set the status.
       currentState = 'running';
     };
 
     this.tick = () => {
-      self.universe.stepForwards();
-
-      //  Apply randomness if required.
-      if (self.randomness !== 0) {
-        if ((Math.random() * 100) < self.randomness) {
-          //  Randomise the ants direction.
-          const direction = Math.random() < 0.5 ? 90 : -90;
-          self.universe.antDirection += direction;
+      //  Work out how many ticks we're taking.
+      let { t } = frequencyInterval(self.tickFrequency);
+      while (t--) {
+        self.universe.stepForwards();
+        //  Apply randomness if required.
+        if (self.randomness !== 0) {
+          if ((Math.random() * 100) < self.randomness) {
+            //  Randomise the ants direction.
+            const direction = Math.random() < 0.5 ? 90 : -90;
+            self.universe.antDirection += direction;
+          }
         }
       }
 
@@ -175,8 +193,8 @@ class MainController {
 
       //  Reset the timer.
       clearInterval(tickIntervalId);
-      tickIntervalId = setInterval(self.tick, 
-        1000 / this.tickFrequency);
+      const { i } = frequencyInterval(self.tickFrequency);
+      tickIntervalId = setInterval(self.tick, i);
     };
 
     this.increaseSpeed = () => {
