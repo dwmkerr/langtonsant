@@ -1,11 +1,11 @@
 function drawAxies(context, axisLength) {
-  context.strokeStyle="#FF000066";
+  context.strokeStyle="#FF000022";
   context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(axisLength, 0);
   context.closePath();
   context.stroke();
-  context.strokeStyle="#00FF0066";
+  context.strokeStyle="#00FF0022";
   context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(0, axisLength);
@@ -159,7 +159,7 @@ function render(langtonsAnt, canvas, options) {
   ctx.restore();
 
   //  Draw the ticks.
-  drawTicks(ctx, { x: 10, y: h - 10 - 16 }, langtonsAnt.ticks);
+  drawTicks(ctx, { x: 20, y: h - 10 - 16 }, langtonsAnt.ticks);
 }
 
 /**

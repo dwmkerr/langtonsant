@@ -9,7 +9,7 @@ import { render, hitTest } from './langton-renderer-canvas2d';
     or backwards.
     */
 
-function LangtonsAnt() {
+function LangtonsAnt(configuration) {
 
   //  The position of the ant.
   this.antPosition = {x: 0, y: 0};
@@ -17,10 +17,8 @@ function LangtonsAnt() {
   //  The direction of the ant, in degrees clockwise from north.
   this.antDirection = 0;
 
-  //  A set of all tiles. The value for each tile is its state index.
-  //  We also have a set of tile states.
+  //  A set of all tiles. 
   this.tiles = [];
-  this.states = [];
 
   //  The bounds of the system.
   this.bounds = {
@@ -33,35 +31,15 @@ function LangtonsAnt() {
   //  The number of ticks.
   this.ticks = 0;
 
-  //  Initialises a universe. If we include a configuration
-  //  value, we can override the states.
-  this.initialise = function (configuration) {
-
-    //  Reset the tiles, ant and states.
-    this.antPosition = {
-      x: 0,
-      y: 0
-    };
-    this.antDirection = 0;
-    this.tiles = [];
-    this.bounds = {
-      xMin: 0,
-      xMax: 0,
-      yMin: 0,
-      yMax: 0
-    };
-    this.states = [];
-
-    //  If we have no states, create our own.
-    if(configuration.states !== undefined) {
-      this.states = configuration.states;
-    } else {
-      this.states = [
-        {direction: 'L', colour: '#FFFFFF'}, 
-        {direction: 'R', colour: '#000000'}
-      ];
-    }
-  };
+  //  Set the states, which cn be provided in the config.
+  if(configuration && configuration.states !== undefined) {
+    this.states = configuration.states;
+  } else {
+    this.states = [
+      {direction: 'L', colour: '#FFFFFF'}, 
+      {direction: 'R', colour: '#000000'}
+    ];
+  }
 
   //  Gets a tile state index. If we don't have a state, return the
   //  default (zero), otherwise return the state from the tiles array.
@@ -92,17 +70,18 @@ function LangtonsAnt() {
     if(y > this.bounds.yMax) {this.bounds.yMax = y;}
   };
 
-  //  Advance a tile states.
-  this.advanceTile = function(x, y) {
+  //  Advance a tile state. Defaults to +1, but you can advance multiple
+  //  steps, or even backwards.
+  this.advanceTile = function(x, y, direction = 1) {
     //  Get the state index, increment it, roll over if we pass
     //  over the last state and update the tile state.
-    var stateIndex = this.getTileStateIndex(x, y)+1;
+    var stateIndex = this.getTileStateIndex(x, y) + direction;
     stateIndex %= this.states.length;
     this.setTileStateIndex(x, y, stateIndex);
   };
 
   //  Take a step forwards.
-  this.stepForwards = function() {
+  this.stepForwards = () => {
 
     //  Get the state of the tile that the ant is on, this'll let
     //  us determine the direction to move in.
@@ -132,6 +111,41 @@ function LangtonsAnt() {
     }
 
     this.ticks++;
+  };
+
+  //  Take a step backwards.
+  this.stepBackwards = function() {
+    if (this.ticks === 0) return;
+
+    //  Move time backwards.
+    this.ticks--;
+
+    //  Move the ant backwards.
+    if(this.antDirection === 0) {
+      this.antPosition.y--;
+    } else if (this.antDirection === 90 || this.antDirection === -270) {
+      this.antPosition.x++;
+    } else if (this.antDirection === 180 || this.antDirection === -180) {
+      this.antPosition.y++;
+    }
+    else {
+      this.antPosition.x--;
+    }
+
+    //  Now we can advance the tile backwards.
+    this.advanceTile(this.antPosition.x, this.antPosition.y), -1;
+
+    //  Get the state of the tile that the ant is on, this'll let
+    //  us determine the direction to move in.
+    var state = this.getTileState(this.antPosition.x, this.antPosition.y);
+
+    //  Change direction backwards.
+    if(state.direction === 'L') {
+      this.antDirection += 90;
+    } else if(state.direction === 'R') {
+      this.antDirection -= 90;
+    }
+    this.antDirection %= 360;
   };
 }
 

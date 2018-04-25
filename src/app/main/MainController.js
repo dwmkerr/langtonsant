@@ -50,16 +50,15 @@ class MainController {
     var currentState = "stopped";
     var tickIntervalId = null;
     var canvas = null;
-    this.universe = new LangtonsAnt();
+
+    //  Initialise the universe with the states.
+    this.universe = new LangtonsAnt({ states: this.states });
 
     //  When the document is ready, we'll grab the antcanvas.
     $timeout(function() {
       canvas = document.getElementById('antcanvas');
       self.render();
     });
-
-    //  Initialise the universe with the states.
-    this.universe.initialise({states: this.states});
 
     //  Runs the simulation.
     this.run = function() {
@@ -76,22 +75,38 @@ class MainController {
       currentState = 'running';
     };
 
+    this.stepBackwards = () => {
+      self.universe.stepBackwards();
+      //  Apply randomness if required.
+      if (self.randomness !== 0) {
+        if ((Math.random() * 100) < self.randomness) {
+          //  Randomise the ants direction.
+          const direction = Math.random() < 0.5 ? 90 : -90;
+          self.universe.antDirection += direction;
+        }
+      }
+      self.render();
+    };
+
+    this.stepForwards = () => {
+      self.universe.stepForwards();
+      //  Apply randomness if required.
+      if (self.randomness !== 0) {
+        if ((Math.random() * 100) < self.randomness) {
+          //  Randomise the ants direction.
+          const direction = Math.random() < 0.5 ? 90 : -90;
+          self.universe.antDirection += direction;
+        }
+      }
+      self.render();
+    };
+
     this.tick = () => {
       //  Work out how many ticks we're taking.
       let { t } = frequencyInterval(self.tickFrequency);
       while (t--) {
-        self.universe.stepForwards();
-        //  Apply randomness if required.
-        if (self.randomness !== 0) {
-          if ((Math.random() * 100) < self.randomness) {
-            //  Randomise the ants direction.
-            const direction = Math.random() < 0.5 ? 90 : -90;
-            self.universe.antDirection += direction;
-          }
-        }
+        this.stepForwards();
       }
-
-      self.render();
     };
 
     this.getCurrentState = function() {
@@ -117,8 +132,7 @@ class MainController {
       }
 
       //  Completely recreate the universe.
-      self.universe = new LangtonsAnt();
-      self.universe.initialise({states: self.states});
+      self.universe = new LangtonsAnt({ states: self.states });
       self.offsetX = this.offsetY = 0;
       self.zoomFactor = 1.0;
 
