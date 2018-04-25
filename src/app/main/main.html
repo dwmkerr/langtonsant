@@ -69,10 +69,19 @@
               <label for="randomness" class="col-sm-5 control-label">Randomness</label>
               <div class="col-sm-5">
                 <div class="input-group">
-                  <input type="text" class="form-control" id="randomness" ng-model="main.randomness">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="randomness"
+                    ng-model="main.randomness"
+                    aria-describedby="randomnesshelp"
+                    >
                   <div class="input-group-addon">%</div>
                 </div>
               </div>
+            </div>
+            <div class="col-sm-7 col-sm-offset-5">
+              <span id="randomnesshelp" class="help-block">Rangton factor. Percentage of times the ant will randomly change direction.</span>
             </div>
           </form>
         </div>
