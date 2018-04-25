@@ -50,10 +50,28 @@
 
         <div class="row">
           <form class="form-horizontal" role="form">
+            <!-- Controls the ticks. -->
             <div class="form-group">
               <label for="tps" class="col-sm-5 control-label">Ticks/Sec</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" id="tps" ng-model="main.tickFrequency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tps"
+                  ng-model="main.tickFrequency"
+                  ng-change="main.frequencyChanged()"
+                >
+              </div>
+            </div>
+
+            <!-- Controls the randomness. -->
+            <div class="form-group">
+              <label for="randomness" class="col-sm-5 control-label">Randomness</label>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="randomness" ng-model="main.randomness">
+                  <div class="input-group-addon">%</div>
+                </div>
               </div>
             </div>
           </form>

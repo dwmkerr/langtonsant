@@ -8,6 +8,7 @@ class MainController {
 
     //  The frequency of universe ticks
     this.tickFrequency = 10;
+    this.randomness = 0.0;
 
     //  Rendering / layout variables.
     this.zoomFactor = 1.0;
@@ -61,6 +62,16 @@ class MainController {
 
     this.tick = () => {
       self.universe.stepForwards();
+
+      //  Apply randomness if required.
+      if (self.randomness !== 0) {
+        if ((Math.random() * 100) < self.randomness) {
+          //  Randomise the ants direction.
+          const direction = Math.random() < 0.5 ? 90 : -90;
+          self.universe.antDirection += direction;
+        }
+      }
+
       self.render();
     };
 
@@ -156,7 +167,7 @@ class MainController {
     };
 
     //  Apply the speed change, resetting the timer if necessary.
-    this.applyFrequencyChange = () => {
+    this.frequencyChanged = () => {
       //  Nothing to do if we're not running.
       if(currentState !== 'running') {
         return;
@@ -170,11 +181,11 @@ class MainController {
 
     this.increaseSpeed = () => {
       this.tickFrequency = this.tickFrequency * 2; 
-      this.applyFrequencyChange();
+      this.frequencyChanged();
     };
     this.decreaseSpeed = () => {
       this.tickFrequency = this.tickFrequency / 2; 
-      this.applyFrequencyChange();
+      this.frequencyChanged();
     };
   }
 };
