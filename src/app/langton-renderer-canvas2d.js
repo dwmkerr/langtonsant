@@ -33,6 +33,7 @@ function render(langtonsAnt, canvas, options) {
   //  TODO; support defaults.
   const {
     tileStateColours,
+    antStateColours,
     zoomFactor,
     offsetX,
     offsetY
@@ -152,7 +153,7 @@ function render(langtonsAnt, canvas, options) {
   var antX = langtonsAnt.antPosition.x * tileSize,
     antY = langtonsAnt.antPosition.y * tileSize;
 
-  ctx.fillStyle = '#ff0000';
+  ctx.fillStyle = antStateColours[langtonsAnt.antState];
 
   //  Tranform before we draw the ant, it makes it easier.
   ctx.save();
