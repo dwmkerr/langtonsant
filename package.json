@@ -1,10 +1,9 @@
 {
   "name": "langtonsant",
   "scripts": {
-    "start": "webpack-dev-server",
-    "test": "vows --spec --isolate",
+    "start": "webpack-dev-server --mode development --open",
     "lint": "eslint .",
-    "bundle": "webpack"
+    "bundle": "webpack --mode production"
   },
   "dependencies": {
     "angular": "^1.6.10",

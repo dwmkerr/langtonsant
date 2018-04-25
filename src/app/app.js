@@ -1,7 +1,5 @@
 import angular from 'angular';
 
-// window.$ = window.jQuery = require('jquery')
-
 import 'bootstrap3/dist/js/bootstrap.js';
 import 'bootstrap3/dist/css/bootstrap.min.css';
 

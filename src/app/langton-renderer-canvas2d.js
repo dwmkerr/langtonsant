@@ -32,10 +32,15 @@ function render(langtonsAnt, canvas, options) {
   //  Grab our options.
   //  TODO; support defaults.
   const {
+    tileStateColours,
     zoomFactor,
     offsetX,
     offsetY
   } = options;
+
+  //  TODO: extract rendering options.
+  const showTileStateNumber = false;
+  const showAntStateNumber = true;
 
   //  TODO: here if we adjust origins to full pixels, we'll avoid blur.
 
@@ -117,18 +122,26 @@ function render(langtonsAnt, canvas, options) {
   }
 
   //  Start drawing those tiles.
+  ctx.font = '9pt Courier New';
   var yCarriageReturn = yPos;
   for(var x = xFirst; x <= xLast; x++) {
     for(var y = yFirst; y<= yLast; y++) {
 
-      //  Get the tile state.
-      var state = langtonsAnt.getTileState(x, y);
+      //  Get the tile state index.
+      var stateIndex = langtonsAnt.getTileStateIndex(x, y);
 
-      //  Draw the tile, but only if it's not the background color.
-      if(state.colour != backgroundColour) {
-        ctx.fillStyle = state.colour;
+      //  Skip state zero tiles (i.e. white tiles)
+      if (stateIndex !== 0) {
+        //  Set the tile colour, defaulting to grey if it is not set.
+        ctx.fillStyle = tileStateColours[stateIndex] || '#CCCCCC';
         ctx.fillRect(xPos, yPos, tileSize - 1, tileSize - 1);
+
+        if (showTileStateNumber) {
+          ctx.fillStyle = '#000000CC';
+          ctx.fillText(stateIndex, xPos + 4, yPos + 14);
+        }
       }
+
       yPos += tileSize;
     }
     xPos += tileSize;

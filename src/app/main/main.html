@@ -130,7 +130,7 @@
           <tr ng-repeat="state in main.states">
             <div class="row">
               <td class="col-sm-4"><la-leftright value="state.direction"></la-leftright></td>
-              <td class="col-sm-7"><la-colourpicker colour="state.colour"></la-colourpicker></td>
+              <td class="col-sm-7"><la-colourpicker colour="main.tileStateColours[$index]"></la-colourpicker></td>
               <td class="col-sm-1"><a href="" ng-hide="$first" ng-click="main.removeState(state)"><span class="glyphicon glyphicon-remove"></span></a></td>
             </div>
           </tr>

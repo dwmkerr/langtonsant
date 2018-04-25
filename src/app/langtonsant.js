@@ -11,8 +11,9 @@ import { render, hitTest } from './langton-renderer-canvas2d';
 
 function LangtonsAnt(configuration) {
 
-  //  The position of the ant.
+  //  The position of the ant. The state is used for termites.
   this.antPosition = {x: 0, y: 0};
+  this.antState = 0;
 
   //  The direction of the ant, in degrees clockwise from north.
   this.antDirection = 0;
@@ -36,8 +37,23 @@ function LangtonsAnt(configuration) {
     this.states = configuration.states;
   } else {
     this.states = [
-      {direction: 'L', colour: '#FFFFFF'}, 
-      {direction: 'R', colour: '#000000'}
+      { turn: -90, tileState: +1 }, // i.e. Left, Next Tile
+      { turn: 90, tileState: +1 }   // i.e. Right, Next Tile
+    ];
+  }
+
+  //  Set the termite states, which can also be provided in the config.
+  if(configuration && configuration.termiteStates !== undefined) {
+    this.termiteStates = configuration.termiteStates;
+  } else {
+    this.termiteStates = [];
+    this.termiteStates[0] = [// ant state 0
+      { antState: +1, turn: 90, tileState: +0 },
+      { antState: +0, turn: 90, tileState: +1 },
+    ];
+    this.termiteStates[1] = [// ant state 0
+      { antState: +0, turn: 0, tileState: -1 },
+      { antState: -1, turn: 0, tileState: +1 },
     ];
   }
 
@@ -87,16 +103,12 @@ function LangtonsAnt(configuration) {
     //  us determine the direction to move in.
     var state = this.getTileState(this.antPosition.x, this.antPosition.y);
 
-    //  Change direction.
-    if(state.direction === 'L') {
-      this.antDirection -= 90;
-    } else if(state.direction === 'R') {
-      this.antDirection += 90;
-    }
+    //  Turn the ant.
+    this.antDirection += state.turn;
     this.antDirection %= 360;
 
     //  Now we can advance the tile.
-    this.advanceTile(this.antPosition.x, this.antPosition.y);
+    this.advanceTile(this.antPosition.x, this.antPosition.y, state.tileState || +1);
 
     //  Move the ant.
     if(this.antDirection === 0) {
@@ -133,18 +145,14 @@ function LangtonsAnt(configuration) {
     }
 
     //  Now we can advance the tile backwards.
-    this.advanceTile(this.antPosition.x, this.antPosition.y), -1;
+    this.advanceTile(this.antPosition.x, this.antPosition.y, -state.tileState || -1);
 
     //  Get the state of the tile that the ant is on, this'll let
     //  us determine the direction to move in.
     var state = this.getTileState(this.antPosition.x, this.antPosition.y);
 
-    //  Change direction backwards.
-    if(state.direction === 'L') {
-      this.antDirection += 90;
-    } else if(state.direction === 'R') {
-      this.antDirection -= 90;
-    }
+    //  Turn, backwards.
+    this.antDirection -= state.turn;
     this.antDirection %= 360;
   };
 }

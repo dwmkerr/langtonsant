@@ -1,6 +1,29 @@
 import LangtonsAnt from '../langtonsant.js';
 import { render } from '../langton-renderer-canvas2d';
 
+function directionToAngle(direction) {
+  switch(direction) {
+    case 'L': return -90;
+    case 'R': return +90;
+    case 'N': return 0;
+    default: return 0;
+  }
+}
+
+function configurationToStates(configuration) {
+  const states = [];
+  for (let i=0; i<configuration.length; i++) {
+    states[i] = {
+      turn: directionToAngle(configuration[i]),
+      tileState: +1, // advance to the next tile by default always
+
+      //  The direction field is just to make it easier to render the form...
+      direction: configuration[i]
+    };
+  }
+  return states;
+}
+
 function frequencyInterval(frequency) {
   //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
   //  be cropped down. 150Hz becomes 7.5Hz with 2 ticks per iteration.
@@ -30,8 +53,10 @@ class MainController {
     this.offsetX = 0;
     this.offsetY = 0;
 
-    //  The set of default colours for states.
-    this.defaultStateColours = [
+    //  This is the colour used to render tiles of each state. Even though by 
+    //  default we only have two states, we include a nice palette so that as
+    //  users add more states, there are some pleasant default colours.
+    this.tileStateColours = [
       '#FFFFFF',
       '#49708A',
       '#88ABC2',
@@ -40,11 +65,8 @@ class MainController {
     ];
 
     //  Available tile states, with the corresponding Turk/Propp configuration.
-    this.states = [
-      {direction:'L', colour: this.defaultStateColours[0]},
-      {direction:'R', colour: this.defaultStateColours[1]}
-    ];
-    this.configuration = 'LR';
+    this.configuration = 'LLRR';
+    this.states = configurationToStates(this.configuration);
 
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = "stopped";
@@ -117,6 +139,7 @@ class MainController {
       if(canvas !== null && canvas !== undefined) {
         //  Use the 2D rendering function.
         render(self.universe, canvas, {
+          tileStateColours: self.tileStateColours,
           zoomFactor: self.zoomFactor,
           offsetX: self.offsetX,
           offsetY: self.offsetY
@@ -155,6 +178,7 @@ class MainController {
       currentState = 'paused';
     };
 
+    //  TODO: this is broken.
     this.removeState = function(state) {
       var index = this.states.indexOf(state);
       if(index !== -1) {
@@ -162,25 +186,17 @@ class MainController {
       }
     };
 
+    //  TODO: this is broken.
     this.addState = function() {
       //  Create a new state with the next colour in the list.
-      var colourIndex = this.states.length % this.defaultStateColours.length;
       this.states.push({
         direction: 'L',
-        colour: this.defaultStateColours[colourIndex]
       });
     };
 
     this.configurationChanged = () => {
       //  Rebuild the state index.
-      this.states = [];
-      for (let i = 0; i < this.configuration.length; i++) {
-        var colourIndex = i % this.defaultStateColours.length;
-        this.states.push({
-          direction: this.configuration[i],
-          colour: this.defaultStateColours[colourIndex]
-        });
-      };
+      this.states = configurationToStates(this.configuration);
 
       //  Reset.
       this.reset();
