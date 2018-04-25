@@ -126,10 +126,11 @@ function render(langtonsAnt, canvas, options) {
   ctx.font = '9pt Courier New';
   var yCarriageReturn = yPos;
   for(var x = xFirst; x <= xLast; x++) {
+    const tileRow = langtonsAnt.tiles[x];
     for(var y = yFirst; y<= yLast; y++) {
 
       //  Get the tile state index.
-      var stateIndex = langtonsAnt.getTileStateIndex(x, y);
+      var stateIndex = tileRow && tileRow[y] ? tileRow[y] : 0;
 
       //  Skip state zero tiles (i.e. white tiles)
       if (stateIndex !== 0) {

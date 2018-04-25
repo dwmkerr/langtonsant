@@ -61,7 +61,12 @@ class MainController {
       '#49708A',
       '#88ABC2',
       '#D0E0EB',
-      '#EBF7F8'
+      '#EBF7F8',
+      '#FFFFFF66',
+      '#49708A66',
+      '#88ABC266',
+      '#D0E0EB66',
+      '#EBF7F866'
     ];
 
     //  Same as above, but for the ant.

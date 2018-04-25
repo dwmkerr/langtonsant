@@ -61,10 +61,9 @@ function LangtonsAnt(configuration) {
   //  default (zero), otherwise return the state from the tiles array.
   this.getTileStateIndex = function(x, y) {
     if(this.tiles[x] === undefined) {
-      this.tiles[x] = [];
+      return 0;
     }
-    var stateIndex = this.tiles[x][y];
-    return stateIndex === undefined ? 0 : stateIndex;
+    return this.tiles[x][y] || 0;
   };
 
   //  Gets a tile state.
