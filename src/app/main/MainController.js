@@ -6,8 +6,13 @@ class MainController {
     const self = this;
     //  Scope variables - can be bound in the view.
 
-    //  The frequency of simulation ticks
+    //  The frequency of universe ticks
     this.tickFrequency = 10;
+
+    //  Rendering / layout variables.
+    this.zoomFactor = 1.0;
+    this.offsetX = 0;
+    this.offsetY = 0;
 
     //  The set of default colours for states.
     this.defaultStateColours = [
@@ -32,8 +37,8 @@ class MainController {
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = "stopped";
     var tickIntervalId = null;
-    var simulation = new LangtonsAnt();
     var canvas = null;
+    this.universe = new LangtonsAnt();
 
     //  When the document is ready, we'll grab the antcanvas.
     $timeout(function() {
@@ -41,8 +46,8 @@ class MainController {
       self.render();
     });
 
-    //  Initialise the simulation with the states.
-    simulation.initialise({states: this.states});
+    //  Initialise the universe with the states.
+    this.universe.initialise({states: this.states});
 
     //  Runs the simulation.
     this.run = function() {
@@ -53,8 +58,8 @@ class MainController {
 
       //  Start the timer.
       tickIntervalId = $interval(function() {
-        simulation.stepForwards();
-        self.info.currentTicks = simulation.ticks;
+        self.universe.stepForwards();
+        self.info.currentTicks = self.universe.ticks;
         self.render();
       }, 1000 / this.tickFrequency);
 
@@ -63,8 +68,8 @@ class MainController {
     };
 
     this.tick = function() {
-      simulation.stepForwards();
-      self.info.currentTicks = simulation.ticks;
+      self.universe.stepForwards();
+      self.info.currentTicks = self.universe.ticks;
       self.render();
     };
 
@@ -74,7 +79,11 @@ class MainController {
 
     this.render = function() {
       if(canvas !== null && canvas !== undefined) {
-        simulation.render(canvas);
+        self.universe.render(canvas, {
+          zoomFactor: self.zoomFactor,
+          offsetX: self.offsetX,
+          offsetY: self.offsetY
+        });
       }
     };
 
@@ -85,14 +94,16 @@ class MainController {
         $interval.cancel(tickIntervalId);
       }
 
-      //  Completely recreate the simulation.
-      simulation = new LangtonsAnt();
-      simulation.initialise({states: this.states});
-      this.info.currentTicks = 0;
+      //  Completely recreate the universe.
+      self.universe = new LangtonsAnt();
+      self.universe.initialise({states: self.states});
+      self.info.currentTicks = 0;
+      self.offsetX = this.offsetY = 0;
+      self.zoomFactor = 1.0;
 
       //  Set the status.
       currentState = 'paused';
-      this.render();
+      self.render();
     };
 
     this.pause = function() {
@@ -126,31 +137,31 @@ class MainController {
     };
 
     this.moveLeft = function(tiles) {
-      simulation.offsetX -= tiles || 1;
+      this.offsetX -= tiles || 1;
       this.render();
     };
     this.moveRight = function(tiles) {
-      simulation.offsetX += tiles || 1;
+      this.offsetX += tiles || 1;
       this.render();
     };
     this.moveUp = function(tiles) {
-      simulation.offsetY -= tiles || 1;
+      this.offsetY -= tiles || 1;
       this.render();
     };
     this.moveDown = function(tiles) {
-      simulation.offsetY += tiles || 1;
+      this.offsetY += tiles || 1;
       this.render();
     };
     this.moveOrigin = function() {
-      simulation.offsetX = simulation.offsetY = 0;
+      this.offsetX = this.offsetY = 0;
       this.render();
     };
     this.zoomIn = function() {
-      simulation.zoomFactor *= 1.1;
+      this.zoomFactor *= 1.1;
       this.render();
     };
     this.zoomOut = function() {
-      simulation.zoomFactor *= 0.9;
+      this.zoomFactor *= 0.9;
       this.render();
     };
   }

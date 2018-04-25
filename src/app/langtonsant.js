@@ -1,3 +1,5 @@
+import { render, hitTest } from './langton-renderer-canvas2d';
+
 /*
     Langton's Ant
 
@@ -31,11 +33,6 @@ function LangtonsAnt() {
     //  The number of ticks.
     this.ticks = 0;
 
-    //  The offset and current zoom factor.
-    this.offsetX = 0;
-    this.offsetY = 0;
-    this.zoomFactor = 1.0;
-
     //  Initialises a universe. If we include a configuration
     //  value, we can override the states.
     this.initialise = function (configuration) {
@@ -54,8 +51,6 @@ function LangtonsAnt() {
             yMax: 0
         };
         this.states = [];
-        this.offsetX = 0;
-        this.offsetY = 0;
 
         //  If we have no states, create our own.
         if(configuration.states !== undefined) {
@@ -140,106 +135,15 @@ function LangtonsAnt() {
     };
 
     //  Render the simulation.
-    this.render = function(canvas) {
-
-        //  Get the drawing context.
-        var ctx = canvas.getContext("2d");
-        ctx.save();
-        ctx.scale(1,-1);
-        ctx.translate(0, -canvas.height);
-
-        //  Draw the background.
-        var backgroundColour = '#FFFFFF';
-        ctx.fillStyle = backgroundColour;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        //  We're going to draw each square with a given edge size
-        var baseTileSize = 25;
-        var tileSize = baseTileSize * this.zoomFactor;
-
-        //  Useful variables for when we're drawing...
-        var width = canvas.width,
-            height = canvas.height,
-            originX = width/2,
-            originY = height/ 2,
-            halfTileSize = tileSize/2;
-
-        //  Work out how many tiles we'll draw and the low/high
-        //  tile values (we basically want one more than will fit on the
-        //  canvas in each direction).
-        var xTiles = Math.floor(canvas.width / tileSize) + 2,
-            yTiles = Math.floor(canvas.height / tileSize) + 2,
-            xFirst = Math.floor(-xTiles/2) - 1,
-            xLast = -xFirst + 1,
-            yFirst = Math.floor(-yTiles/2) - 1,
-            yLast = -yFirst + 1;
-
-        //  Rather than calculating the position of each time each time, calculate the
-        //  top left part of the top left tile and just nudge it each time.
-        var xPos = originX + xFirst*tileSize - halfTileSize + 1,
-            yPos = originY + yFirst*tileSize - halfTileSize + 1;
-
-        //  Apply the offset.
-        xFirst += this.offsetX;
-        xLast += this.offsetX;
-        yFirst += this.offsetY;
-        yLast += this.offsetY;
-
-        //  Start drawing those tiles.
-        var yCarriageReturn = yPos;
-        for(var x = xFirst; x <= xLast; x++) {
-            for(var y = yFirst; y<= yLast; y++) {
-
-                //  Get the tile state.
-                var state = this.getTileState(x, y);
-
-                //  Draw the tile, but only if it's not the background color.
-                if(state.colour != backgroundColour) {
-                    ctx.fillStyle = state.colour;
-                    ctx.fillRect(xPos, yPos, tileSize - 1, tileSize - 1);
-                }
-                yPos += tileSize;
-            }
-            xPos += tileSize;
-            yPos = yCarriageReturn;
-        }
-
-        //  Before we draw the ant and origin, nudge the origin.
-        originX -= this.offsetX * tileSize;
-        originY -= this.offsetY * tileSize;
-
-        //  Draw the ant.
-        var antX = originX + this.antPosition.x * tileSize,
-            antY = originY + this.antPosition.y * tileSize;
-
-        ctx.fillStyle = '#ff0000';
-
-        //  Tranform before we draw the ant, it makes it easier.
-        ctx.save();
-        ctx.translate(antX, antY);
-        ctx.scale(this.zoomFactor, this.zoomFactor);
-        ctx.rotate((this.antDirection / 180) * Math.PI);
-        ctx.beginPath();
-        ctx.moveTo(-(baseTileSize-8)/2, -(baseTileSize-4)/2);
-        ctx.lineTo(+(baseTileSize-8)/2, -(baseTileSize-4)/2);
-        ctx.lineTo(0, (baseTileSize-4)/2);
-        ctx.fill();
-        ctx.closePath();
-        ctx.restore();
-
-
-        //  Uncomment to draw the axis...
-        var axisLength = 50 * this.zoomFactor;
-        ctx.beginPath();
-        ctx.moveTo(originX,originY);
-        ctx.lineTo(originX+axisLength,originY);
-        ctx.moveTo(originX,originY);
-        ctx.lineTo(originX,originY+axisLength);
-        ctx.closePath();
-        ctx.stroke();
-
-        ctx.restore();
+    this.render = function(canvas, options) {
+      //  Use the 2D rendering function.
+      render(this, canvas, {
+        zoomFactor: options.zoomFactor,
+        offsetX: options.offsetX,
+        offsetY: options.offsetY
+      });
     };
+
 }
 
 export default LangtonsAnt;
