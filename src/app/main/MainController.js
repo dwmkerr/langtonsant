@@ -2,7 +2,7 @@
 import LangtonsAnt from '../langtonsant.js';
 
 class MainController {
-  constructor($scope, $interval, $timeout) {
+  constructor($scope, $timeout) {
     const self = this;
     //  Scope variables - can be bound in the view.
 
@@ -29,11 +29,6 @@ class MainController {
       {direction:'R', colour: this.defaultStateColours[1]}
     ];
 
-    //  Simulatio info.
-    this.info = {
-      currentTicks: 0
-    };
-
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = "stopped";
     var tickIntervalId = null;
@@ -57,19 +52,15 @@ class MainController {
       }
 
       //  Start the timer.
-      tickIntervalId = $interval(function() {
-        self.universe.stepForwards();
-        self.info.currentTicks = self.universe.ticks;
-        self.render();
-      }, 1000 / this.tickFrequency);
+      tickIntervalId = setInterval(this.tick,
+        1000 / this.tickFrequency);
 
       //  Set the status.
       currentState = 'running';
     };
 
-    this.tick = function() {
+    this.tick = () => {
       self.universe.stepForwards();
-      self.info.currentTicks = self.universe.ticks;
       self.render();
     };
 
@@ -91,13 +82,12 @@ class MainController {
 
       //  If we're running, stop the timer.
       if(currentState === 'running') {
-        $interval.cancel(tickIntervalId);
+        clearInterval(tickIntervalId);
       }
 
       //  Completely recreate the universe.
       self.universe = new LangtonsAnt();
       self.universe.initialise({states: self.states});
-      self.info.currentTicks = 0;
       self.offsetX = this.offsetY = 0;
       self.zoomFactor = 1.0;
 
@@ -114,7 +104,7 @@ class MainController {
       }
 
       //  Cancel the timer.
-      $interval.cancel(tickIntervalId);
+      clearInterval(tickIntervalId);
 
       //  Set the status.
       currentState = 'paused';
@@ -164,9 +154,31 @@ class MainController {
       this.zoomFactor *= 0.9;
       this.render();
     };
+
+    //  Apply the speed change, resetting the timer if necessary.
+    this.applyFrequencyChange = () => {
+      //  Nothing to do if we're not running.
+      if(currentState !== 'running') {
+        return;
+      }
+
+      //  Reset the timer.
+      clearInterval(tickIntervalId);
+      tickIntervalId = setInterval(self.tick, 
+        1000 / this.tickFrequency);
+    };
+
+    this.increaseSpeed = () => {
+      this.tickFrequency = this.tickFrequency * 2; 
+      this.applyFrequencyChange();
+    };
+    this.decreaseSpeed = () => {
+      this.tickFrequency = this.tickFrequency / 2; 
+      this.applyFrequencyChange();
+    };
   }
 };
  
-MainController.$inject = ['$scope', '$interval', '$timeout'];
+MainController.$inject = ['$scope', '$timeout'];
 
 export default MainController;

@@ -9,6 +9,12 @@ function drawAxies(context, axisLength) {
   context.stroke();
 }
 
+function drawTicks(context, pos, message) {
+  context.font = '18pt Courier New';
+  context.fillStyle = 'black';
+  context.fillText(message, pos.x, pos.y);
+}
+
 /**
  * render - renders the universe to a 2D canvas.
  *
@@ -28,6 +34,9 @@ function render(langtonsAnt, canvas, options) {
   } = options;
 
   //  TODO: here if we adjust origins to full pixels, we'll avoid blur.
+
+  //  Drawing style.
+  const backgroundColour = '#FFFFFF';
 
   //  Size constants.
   const w = canvas.width;
@@ -49,16 +58,15 @@ function render(langtonsAnt, canvas, options) {
   //  Get the drawing context.
   var ctx = canvas.getContext("2d");
 
-  //  Save the current transformation, then adjust the coordinates so that the
-  //  origin is at the center of the canvas.
+  //  Clear the background.
+  ctx.fillStyle = backgroundColour;
+  ctx.fillRect(0, 0, w, h);
+
+  //  Clear, then save the current transformation, then adjust the coordinates
+  //  so that the origin is at the center of the canvas.
   ctx.save();
   ctx.scale(1,-1);
   ctx.translate(wHalf, -h + hHalf);
-
-  //  Draw the background.
-  var backgroundColour = '#FFFFFF';
-  ctx.fillStyle = backgroundColour;
-  ctx.fillRect(left, bottom, w, h);
 
   //  Draw the axis.
   drawAxies(ctx, tileSize * 5);
@@ -139,8 +147,11 @@ function render(langtonsAnt, canvas, options) {
   ctx.closePath();
   ctx.restore();
 
-
+  //  Back to normal coordinates.
   ctx.restore();
+
+  //  Draw the ticks.
+  drawTicks(ctx, { x: 10, y: h - 10 - 16 }, langtonsAnt.ticks);
 }
 
 /**
