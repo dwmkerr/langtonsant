@@ -1,0 +1,23 @@
+extends:
+  eslint:recommended
+sourceType: module
+env:
+  es6: true
+  node: true
+  mocha: true
+parserOptions:
+  ecmaVersion: 8
+rules:
+  indent:
+    - error
+    - 2
+  no-console: 0
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always

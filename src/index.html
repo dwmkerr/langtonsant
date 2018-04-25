@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app="langtonsant">
+<head>
+<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> -->
+    <title>Langton's Ant</title>
+    <style>
+
+        /* Styling needed for a fullscreen canvas and no scrollbars. */
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #antcanvas {
+            display: block;
+        }
+
+        #controls {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+        }
+
+        #collapseSettings {
+            width: 420px;
+        }
+
+        #locationControls {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+        }
+
+        #info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="antcanvas"></canvas>
+    <main></main>
+<div id="info">
+    <p><a href="http://en.wikipedia.org/wiki/Langton's_ant">what is langton's ant</a> |
+        <a href="http://github.com/dwmkerr/langtonsant">langton's ant on github</a> |
+        <a
+                href="http://www.dwmkerr.com">dwmkerr.com</a></p>
+</div>
+
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41728580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+</body>
+</html>
