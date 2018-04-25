@@ -1,8 +1,12 @@
 function drawAxies(context, axisLength) {
-  context.strokeStyle="#FF0000BB";
+  context.strokeStyle="#FF000066";
   context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(axisLength, 0);
+  context.closePath();
+  context.stroke();
+  context.strokeStyle="#00FF0066";
+  context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(0, axisLength);
   context.closePath();
@@ -69,7 +73,10 @@ function render(langtonsAnt, canvas, options) {
   ctx.translate(wHalf, -h + hHalf);
 
   //  Draw the axis.
+  ctx.save();
+  ctx.translate(-offsetX * tileSize, -offsetY * tileSize);
   drawAxies(ctx, tileSize * 5);
+  ctx.restore();
 
   //  Work out how many tiles we'll draw and the low/high
   //  tile values (we basically want one more than will fit on the
@@ -96,15 +103,15 @@ function render(langtonsAnt, canvas, options) {
   ctx.strokeStyle="#00000011";
   for (let v = xFirst; v <= xLast; v++) {
     ctx.beginPath();
-    ctx.moveTo((v * tileSize) - halfTileSize, bottom);
-    ctx.lineTo((v * tileSize) - halfTileSize, top);
+    ctx.moveTo(((v - offsetX) * tileSize) - halfTileSize, bottom);
+    ctx.lineTo(((v - offsetX) * tileSize) - halfTileSize, top);
     ctx.closePath();
     ctx.stroke();
   }
  for (let h = yFirst; h <= yLast; h++) {
     ctx.beginPath();
-    ctx.moveTo(left, (h * tileSize) - halfTileSize);
-    ctx.lineTo(right, (h * tileSize) - halfTileSize);
+    ctx.moveTo(left, ((h - offsetY) * tileSize) - halfTileSize);
+    ctx.lineTo(right, ((h - offsetY) * tileSize) - halfTileSize);
     ctx.closePath();
     ctx.stroke();
   }
@@ -136,6 +143,7 @@ function render(langtonsAnt, canvas, options) {
 
   //  Tranform before we draw the ant, it makes it easier.
   ctx.save();
+  ctx.translate(-offsetX * tileSize, -offsetY * tileSize);
   ctx.translate(antX, antY);
   ctx.scale(zoomFactor, zoomFactor);
   ctx.rotate((langtonsAnt.antDirection / 180) * Math.PI);
