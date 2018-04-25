@@ -1,5 +1,5 @@
-
 import LangtonsAnt from '../langtonsant.js';
+import { render } from '../langton-renderer-canvas2d';
 
 function frequencyInterval(frequency) {
   //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
@@ -39,11 +39,12 @@ class MainController {
       '#EBF7F8'
     ];
 
-    //  Available tile states.
+    //  Available tile states, with the corresponding Turk/Propp configuration.
     this.states = [
       {direction:'L', colour: this.defaultStateColours[0]},
       {direction:'R', colour: this.defaultStateColours[1]}
     ];
+    this.configuration = 'LR';
 
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = "stopped";
@@ -99,7 +100,8 @@ class MainController {
 
     this.render = function() {
       if(canvas !== null && canvas !== undefined) {
-        self.universe.render(canvas, {
+        //  Use the 2D rendering function.
+        render(self.universe, canvas, {
           zoomFactor: self.zoomFactor,
           offsetX: self.offsetX,
           offsetY: self.offsetY
@@ -153,6 +155,21 @@ class MainController {
         direction: 'L',
         colour: this.defaultStateColours[colourIndex]
       });
+    };
+
+    this.configurationChanged = () => {
+      //  Rebuild the state index.
+      this.states = [];
+      for (let i = 0; i < this.configuration.length; i++) {
+        var colourIndex = i % this.defaultStateColours.length;
+        this.states.push({
+          direction: this.configuration[i],
+          colour: this.defaultStateColours[colourIndex]
+        });
+      };
+
+      //  Reset.
+      this.reset();
     };
 
     this.moveLeft = function(tiles) {

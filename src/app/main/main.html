@@ -52,8 +52,8 @@
           <form class="form-horizontal" role="form">
             <!-- Controls the ticks. -->
             <div class="form-group">
-              <label for="tps" class="col-sm-5 control-label">Ticks/Sec</label>
-              <div class="col-sm-5">
+              <label for="tps" class="col-sm-4 control-label">Ticks/Sec</label>
+              <div class="col-sm-6">
                 <input
                   type="text"
                   class="form-control"
@@ -66,8 +66,8 @@
 
             <!-- Controls the randomness. -->
             <div class="form-group">
-              <label for="randomness" class="col-sm-5 control-label">Randomness</label>
-              <div class="col-sm-5">
+              <label for="randomness" class="col-sm-4 control-label">Randomness</label>
+              <div class="col-sm-6">
                 <div class="input-group">
                   <input
                     type="text"
@@ -80,9 +80,29 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-7 col-sm-offset-5">
+            <div class="col-sm-7 col-sm-offset-4">
               <span id="randomnesshelp" class="help-block">Rangton factor. Percentage of times the ant will randomly change direction.</span>
             </div>
+
+            <!-- Controls the configuration. -->
+            <div class="form-group">
+              <label for="configuration" class="col-sm-4 control-label">Configuration</label>
+              <div class="col-sm-6">
+                <input
+                   type="text"
+                   class="form-control"
+                   id="configuration"
+                   ng-disabled="main.getCurrentState() == 'running'"
+                   ng-model="main.configuration"
+                   ng-change="main.configurationChanged()"
+                   aria-describedby="configurationhelp"
+                   >
+              </div>
+            </div>
+            <div class="col-sm-7 col-sm-offset-4">
+              <span id="configurationhelp" class="help-block">Turk/Propp Configuration. Changing will reset the simulation.</span>
+            </div>
+
           </form>
         </div>
 
