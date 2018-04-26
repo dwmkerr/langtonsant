@@ -42,41 +42,45 @@ function LangtonsAnt(configuration) {
     ];
   }
 
-  //  Set the termite states, which can also be provided in the config.
-  if(configuration && configuration.termiteStates !== undefined) {
-    this.termiteStates = configuration.termiteStates;
-  } else {
-    this.termiteStates = [];
-    this.termiteStates[0] = [// ant state 0
-      { antState: +1, turn: 90, tileState: +0 },
-      { antState: +0, turn: 90, tileState: +1 },
-    ];
-    this.termiteStates[1] = [// ant state 0
-      { antState: +0, turn: 0, tileState: -1 },
-      { antState: -1, turn: 0, tileState: +1 },
-    ];
-  }
+  //  The state transformation matrix. For an ant of antState, on
+  //  a tile of tileState, apply the given transformation to the ant,
+  //  direction and tile.
+  this.transformationMatrix = [
+    //  Ant State 0
+    [
+      { changeAnt: +0, changeDirection: -90, changeTile: +1 },
+      { changeAnt: +0, changeDirection: +90, changeTile: +1 },
+    ]
+  ];
 
-  //  Gets a tile state index. If we don't have a state, return the
-  //  default (zero), otherwise return the state from the tiles array.
-  this.getTileStateIndex = function(x, y) {
+  //  Termite program.
+  // this.transformationMatrix = [
+    // //  Ant State 0
+    // [
+      // { changeAnt: +1, changeDirection: +90, changeTile: +0 },
+      // { changeAnt: +0, changeDirection: +90, changeTile: +1 },
+    // ],
+    // //  Ant State 1
+    // [
+      // { changeAnt: +0, changeDirection: 0, changeTile: +1 },
+      // { changeAnt: +1, changeDirection: 0, changeTile: +1 },
+    // ]
+  // ];
+
+  //  Get a tile state. Tiles which have not yet been touched have state zero.
+  this.getTileState = function(x, y) {
     if(this.tiles[x] === undefined) {
       return 0;
     }
     return this.tiles[x][y] || 0;
   };
 
-  //  Gets a tile state.
-  this.getTileState = function(x, y) {
-    return this.states[this.getTileStateIndex(x, y)];
-  };
-
-  //  Set a tile state index.
-  this.setTileStateIndex = function(x, y, stateIndex) {
+  //  Set a tile state.
+  this.setTileState = function(x, y, state) {
     if(this.tiles[x] === undefined) {
       this.tiles[x] = [];
     }
-    this.tiles[x][y] = stateIndex;
+    this.tiles[x][y] = state;
 
     //  Update the bounds of the system.
     if(x < this.bounds.xMin) {this.bounds.xMin = x;}
@@ -85,29 +89,34 @@ function LangtonsAnt(configuration) {
     if(y > this.bounds.yMax) {this.bounds.yMax = y;}
   };
 
+  //  For a given ant/tile state, get the transformation.
+  this.getTransformation = function(antState, x, y) {
+    //  Get the state of the tile. Then get the transformation.
+    const tileState = this.getTileState(x, y);
+    return this.transformationMatrix[antState][tileState];
+  };
+
   //  Advance a tile state. Defaults to +1, but you can advance multiple
   //  steps, or even backwards.
   this.advanceTile = function(x, y, direction = 1) {
-    //  Get the state index, increment it, roll over if we pass
-    //  over the last state and update the tile state.
-    var stateIndex = this.getTileStateIndex(x, y) + direction;
-    stateIndex %= this.states.length;
-    this.setTileStateIndex(x, y, stateIndex);
+    //  Get the state, increment it, roll over if we pass
+    //  over the last and update the tile state.
+    var state = this.getTileState(x, y) + direction;
+    state %= this.transformationMatrix[0].length;
+    this.setTileState(x, y, state);
   };
 
   //  Take a step forwards.
   this.stepForwards = () => {
 
-    //  Get the state of the tile that the ant is on, this'll let
-    //  us determine the direction to move in.
-    var state = this.getTileState(this.antPosition.x, this.antPosition.y);
+    //  Get the transformation.
+    var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
-    //  Turn the ant.
-    this.antDirection += state.turn;
+    //  Change tile, direction and ant.
+    this.advanceTile(this.antPosition.x, this.antPosition.y, transformation.changeTile);
+    this.antDirection += transformation.changeDirection;
     this.antDirection %= 360;
-
-    //  Now we can advance the tile.
-    this.advanceTile(this.antPosition.x, this.antPosition.y, state.tileState || +1);
+    this.antState += transformation.changeAnt;
 
     //  Move the ant.
     if(this.antDirection === 0) {
@@ -143,16 +152,14 @@ function LangtonsAnt(configuration) {
       this.antPosition.x--;
     }
 
-    //  Now we can advance the tile backwards.
-    this.advanceTile(this.antPosition.x, this.antPosition.y, -state.tileState || -1);
+    //  Get the transformation.
+    var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
-    //  Get the state of the tile that the ant is on, this'll let
-    //  us determine the direction to move in.
-    var state = this.getTileState(this.antPosition.x, this.antPosition.y);
-
-    //  Turn, backwards.
-    this.antDirection -= state.turn;
+    //  Change tile, direction and ant (all backwards).
+    this.advanceTile(this.antPosition.x, this.antPosition.y, -transformation.changeTile);
+    this.antDirection -= transformation.changeDirection;
     this.antDirection %= 360;
+    this.antState -= transformation.changeAnt;
   };
 }
 
