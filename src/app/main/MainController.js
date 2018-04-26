@@ -66,7 +66,7 @@ class MainController {
     var canvas = null;
 
     //  Initialise the universe with the states.
-    this.universe = new LangtonsAnt({ states: this.states });
+    this.universe = new LangtonsAnt({ transformationMatrix: this.transformationMatrix });
 
     //  When the document is ready, we'll grab the antcanvas.
     $timeout(function() {
@@ -148,7 +148,7 @@ class MainController {
       }
 
       //  Completely recreate the universe.
-      self.universe = new LangtonsAnt({ states: self.states });
+      self.universe = new LangtonsAnt({ transformationMatrix: self.transformationMatrix });
       self.offsetX = this.offsetY = 0;
       self.zoomFactor = 1.0;
 

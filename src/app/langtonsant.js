@@ -32,16 +32,6 @@ function LangtonsAnt(configuration) {
   //  The number of ticks.
   this.ticks = 0;
 
-  //  Set the states, which cn be provided in the config.
-  if(configuration && configuration.states !== undefined) {
-    this.states = configuration.states;
-  } else {
-    this.states = [
-      { turn: -90, tileState: +1 }, // i.e. Left, Next Tile
-      { turn: 90, tileState: +1 }   // i.e. Right, Next Tile
-    ];
-  }
-
   //  The state transformation matrix. For an ant of antState, on
   //  a tile of tileState, apply the given transformation to the ant,
   //  direction and tile.
@@ -52,6 +42,10 @@ function LangtonsAnt(configuration) {
       { changeAnt: +0, changeDirection: +90, changeTile: +1 },
     ]
   ];
+  debugger;
+  if (configuration.transformationMatrix) {
+    this.transformationMatrix = configuration.transformationMatrix;
+  }
 
   //  Termite program.
   // this.transformationMatrix = [
