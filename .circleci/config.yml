@@ -29,3 +29,20 @@ jobs:
       - run:
           name: upload-coverage
           command: bash <(curl -s https://codecov.io/bash)
+    publish:
+    docker:
+      - image: circleci/node:8.5
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm publish
+      - run: make deploy
+workflows:
+  version: 2
+  tagged-build:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
