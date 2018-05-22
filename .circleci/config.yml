@@ -35,6 +35,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get -y -qq install awscli
+      - run: make build
       - run: make deploy
   publish:
     docker:
