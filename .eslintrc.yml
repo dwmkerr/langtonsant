@@ -1,6 +1,5 @@
 extends:
   eslint:recommended
-sourceType: module
 env:
   es6: true
   node: true

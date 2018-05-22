@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/circle
+    docker:
+      - image: circleci/node:8.5
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: npm-install
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: lint
+          command: npm run lint
+      - run:
+          name: test
+          command: npm run test:ci
+      - store_artifacts:
+          path: ./artifacts
+          prefix: artifacts
+      - store_test_results:
+          path: ./artifacts/tests
+      - run:
+          name: upload-coverage
+          command: bash <(curl -s https://codecov.io/bash)
