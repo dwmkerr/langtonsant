@@ -42,7 +42,8 @@ workflows:
   tagged-build:
     jobs:
       - build
-      - deploy:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+      - deploy
+      # - deploy:
+          # filters:
+            # tags:
+              # only: /v[0-9]+(\.[0-9]+)*/
