@@ -90,9 +90,9 @@ describe('compiler', () => {
     it('build a matrix with the correct rank and order', () => {
       const input = '1,L,1,1,L,1,1,R,1,0,0,0';
       const matrix = buildMatrix(input);
-      expect(matrix.length).to.equal(2)     // order 2, i.e. 2 rows for 2 ant states
-      expect(matrix[0].length).to.equal(2)  // rank 2, i.e. 2 ranks for 2 tile states
-      expect(matrix[1].length).to.equal(2)  // rank 2, i.e. 2 ranks for 2 tile states
+      expect(matrix.length).to.equal(2);    // order 2, i.e. 2 rows for 2 ant states
+      expect(matrix[0].length).to.equal(2);  // rank 2, i.e. 2 ranks for 2 tile states
+      expect(matrix[1].length).to.equal(2);  // rank 2, i.e. 2 ranks for 2 tile states
     });
   });
 

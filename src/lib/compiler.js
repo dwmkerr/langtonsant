@@ -1,14 +1,14 @@
 function parseDirection(direction) {
   switch(direction) {
-      case '0': return 0;
-      case 'R': return 90;
-      case '90': return 90;
-      case 'L': return -90;
-      case '-90': return -90;
-      case 'U': return 180;
-      case '180': return 180;
-      case '-180': return 180;
-      default: throw new Error(`Compiler Error: ${direction} is not a valid direction`);
+    case '0': return 0;
+    case 'R': return 90;
+    case '90': return 90;
+    case 'L': return -90;
+    case '-90': return -90;
+    case 'U': return 180;
+    case '180': return 180;
+    case '-180': return 180;
+    default: throw new Error(`Compiler Error: ${direction} is not a valid direction`);
   }
 }
 
@@ -36,7 +36,7 @@ function normaliseTuples(input) {
     //  Remove brackets like this a,b,c)(d,e,f), replace with comma
     .replace(/\)\(/g, ',')
     //  Now that's done, all other brackets can go.
-    .replace(/[\(\)]/g, '');
+    .replace(/[()]/g, '');
 }
 
 function buildMatrix(input) {

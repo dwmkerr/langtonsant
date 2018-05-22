@@ -1,5 +1,3 @@
-import { render, hitTest } from './langton-renderer-canvas2d';
-
 import { compiler } from '../lib/compiler';
 
 /*
@@ -11,7 +9,7 @@ import { compiler } from '../lib/compiler';
     or backwards.
     */
 
-function LangtonsAnt(configuration) {
+function LangtonsAnt(/* configuration */) {
 
   //  The position of the ant. The state is used for termites.
   this.antPosition = {x: 0, y: 0};
@@ -42,30 +40,6 @@ function LangtonsAnt(configuration) {
         (1, R, 1), (0, 0, 0)
   `;
   this.transformationMatrix = compiler(program);
-  // this.transformationMatrix = [
-    // //  Ant State 0
-    // [
-      // { changeAnt: +0, changeDirection: -90, changeTile: +1 },
-      // { changeAnt: +0, changeDirection: +90, changeTile: +1 },
-    // ]
-  // ];
-  // if (configuration.transformationMatrix) {
-    // this.transformationMatrix = configuration.transformationMatrix;
-  // }
-
-  // //  Termite program.
-  // this.transformationMatrix = [
-    // //  Ant State 0
-    // [
-      // { changeAnt: +1, changeDirection: +90, changeTile: +0 },
-      // { changeAnt: +0, changeDirection: +90, changeTile: +1 },
-    // ],
-    // //  Ant State 1
-    // [
-      // { changeAnt: +0, changeDirection: 0, changeTile: +1 },
-      // { changeAnt: +1, changeDirection: 0, changeTile: +1 },
-    // ]
-  // ];
 
   //  Get a tile state. Tiles which have not yet been touched have state zero.
   this.getTileState = function(x, y) {
@@ -113,7 +87,7 @@ function LangtonsAnt(configuration) {
     var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
     //  Change tile, direction and ant.
-    this.setTileState(this.antPosition.x, this.antPosition.y, transformation.changeTile)
+    this.setTileState(this.antPosition.x, this.antPosition.y, transformation.changeTile);
     this.antDirection += transformation.changeDirection;
     this.antDirection %= 360;
     this.antState = transformation.changeAnt;

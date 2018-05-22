@@ -61,7 +61,7 @@ class MainController {
     this.transformationMatrix = compiler(this.configuration);
 
     //  None scope variables. These are used by the controller, but not exposed.
-    var currentState = "stopped";
+    var currentState = 'stopped';
     var tickIntervalId = null;
     var canvas = null;
 
@@ -189,7 +189,7 @@ class MainController {
 
     this.configurationChanged = () => {
       //  Recompile the transformation matrix.
-      this.transformationMatrix = compile(this.configuration);
+      this.transformationMatrix = compiler(this.configuration);
 
       //  Reset.
       this.reset();
@@ -246,7 +246,7 @@ class MainController {
       this.frequencyChanged();
     };
   }
-};
+}
  
 MainController.$inject = ['$scope', '$timeout'];
 

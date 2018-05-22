@@ -16,10 +16,10 @@ module.exports = {
       inject: 'body'
     }),
     new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-    'window.jQuery': 'jquery',
-    // angular: 'angular',
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      // angular: 'angular',
     })
   ],
   module: {
@@ -43,8 +43,8 @@ module.exports = {
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendor",
-          chunks: "initial",
+          name: 'vendor',
+          chunks: 'initial',
         },
       },
     },
