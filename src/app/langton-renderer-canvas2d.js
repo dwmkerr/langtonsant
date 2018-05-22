@@ -1,11 +1,11 @@
 function drawAxies(context, axisLength) {
-  context.strokeStyle="#FF000022";
+  context.strokeStyle='#FF000022';
   context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(axisLength, 0);
   context.closePath();
   context.stroke();
-  context.strokeStyle="#00FF0022";
+  context.strokeStyle='#00FF0022';
   context.beginPath();
   context.moveTo(0, 0);
   context.lineTo(0, axisLength);
@@ -66,7 +66,7 @@ function render(langtonsAnt, canvas, options) {
   const halfTileSize = tileSize / 2;
 
   //  Get the drawing context.
-  var ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext('2d');
 
   //  Clear the background.
   ctx.fillStyle = backgroundColour;
@@ -106,7 +106,7 @@ function render(langtonsAnt, canvas, options) {
   yLast += offsetY;
 
   //  Draw the grid.
-  ctx.strokeStyle="#00000011";
+  ctx.strokeStyle='#00000011';
   for (let v = xFirst; v <= xLast; v++) {
     ctx.beginPath();
     ctx.moveTo(((v - offsetX) * tileSize) - halfTileSize, bottom);
@@ -114,7 +114,7 @@ function render(langtonsAnt, canvas, options) {
     ctx.closePath();
     ctx.stroke();
   }
- for (let h = yFirst; h <= yLast; h++) {
+  for (let h = yFirst; h <= yLast; h++) {
     ctx.beginPath();
     ctx.moveTo(left, ((h - offsetY) * tileSize) - halfTileSize);
     ctx.lineTo(right, ((h - offsetY) * tileSize) - halfTileSize);
@@ -153,8 +153,9 @@ function render(langtonsAnt, canvas, options) {
   //  Draw the ant.
   var antX = langtonsAnt.antPosition.x * tileSize,
     antY = langtonsAnt.antPosition.y * tileSize;
+  const antState = langtonsAnt.antState;
 
-  ctx.fillStyle = antStateColours[langtonsAnt.antState];
+  ctx.fillStyle = antStateColours[antState];
 
   //  Tranform before we draw the ant, it makes it easier.
   ctx.save();
@@ -168,6 +169,10 @@ function render(langtonsAnt, canvas, options) {
   ctx.lineTo(0, (baseTileSize-4)/2);
   ctx.fill();
   ctx.closePath();
+  if (showAntStateNumber) {
+    ctx.fillStyle = '#000000CC';
+    ctx.fillText(antState, antX, antY);
+  }
   ctx.restore();
 
   //  Back to normal coordinates.
@@ -190,8 +195,8 @@ function render(langtonsAnt, canvas, options) {
 function hitTest(langtonsAnt, canvas, options, pos) {
   const {
     zoomFactor,
-    offsetX,
-    offsetY
+    // offsetX,
+    // offsetY
   } = options;
 
   //  TODO: here if we adjust origins to full pixels, we'll avoid blur.

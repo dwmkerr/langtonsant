@@ -1,28 +1,6 @@
 import LangtonsAnt from '../langtonsant.js';
 import { render } from '../langton-renderer-canvas2d';
-
-function directionToAngle(direction) {
-  switch(direction) {
-    case 'L': return -90;
-    case 'R': return +90;
-    case 'N': return 0;
-    default: return 0;
-  }
-}
-
-function configurationToStates(configuration) {
-  const states = [];
-  for (let i=0; i<configuration.length; i++) {
-    states[i] = {
-      turn: directionToAngle(configuration[i]),
-      tileState: +1, // advance to the next tile by default always
-
-      //  The direction field is just to make it easier to render the form...
-      direction: configuration[i]
-    };
-  }
-  return states;
-}
+import { compiler } from '../../lib/compiler';
 
 function frequencyInterval(frequency) {
   //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
@@ -77,17 +55,18 @@ class MainController {
       '#FFF7F8'
     ];
 
-    //  Available tile states, with the corresponding Turk/Propp configuration.
+    //  Create a configuration and then compile the initial transformation
+    //  matrix.
     this.configuration = 'LR';
-    this.states = configurationToStates(this.configuration);
+    this.transformationMatrix = compiler(this.configuration);
 
     //  None scope variables. These are used by the controller, but not exposed.
-    var currentState = "stopped";
+    var currentState = 'stopped';
     var tickIntervalId = null;
     var canvas = null;
 
     //  Initialise the universe with the states.
-    this.universe = new LangtonsAnt({ states: this.states });
+    this.universe = new LangtonsAnt({ transformationMatrix: this.transformationMatrix });
 
     //  When the document is ready, we'll grab the antcanvas.
     $timeout(function() {
@@ -169,7 +148,7 @@ class MainController {
       }
 
       //  Completely recreate the universe.
-      self.universe = new LangtonsAnt({ states: self.states });
+      self.universe = new LangtonsAnt({ transformationMatrix: self.transformationMatrix });
       self.offsetX = this.offsetY = 0;
       self.zoomFactor = 1.0;
 
@@ -209,8 +188,8 @@ class MainController {
     };
 
     this.configurationChanged = () => {
-      //  Rebuild the state index.
-      this.states = configurationToStates(this.configuration);
+      //  Recompile the transformation matrix.
+      this.transformationMatrix = compiler(this.configuration);
 
       //  Reset.
       this.reset();
@@ -267,7 +246,7 @@ class MainController {
       this.frequencyChanged();
     };
   }
-};
+}
  
 MainController.$inject = ['$scope', '$timeout'];
 

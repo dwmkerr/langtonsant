@@ -1,16 +1,18 @@
 extends:
   eslint:recommended
-sourceType: module
 env:
   es6: true
+  browser: true
   node: true
   mocha: true
 parserOptions:
+  sourceType: module
   ecmaVersion: 8
 rules:
   indent:
     - error
     - 2
+    - SwitchCase: 1
   no-console: 0
   linebreak-style:
     - error
