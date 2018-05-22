@@ -20,6 +20,7 @@ describe('compiler', () => {
       expect(parseDirection('-90')).to.eql(-90);
       expect(parseDirection('U')).to.eql(180);
       expect(parseDirection('180')).to.eql(180);
+      expect(parseDirection('-180')).to.eql(180);
     });
 
     it('throws for unknown directions', () => {
