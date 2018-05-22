@@ -36,6 +36,7 @@ jobs:
       - checkout
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: npm publish
+      - run: pip install awscli --upgrade --user
       - run: make deploy
 workflows:
   version: 2
