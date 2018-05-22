@@ -130,6 +130,13 @@ make deploy
 
 This command will require permissions to the `langtonsant.com` S3 bucket.
 
+### CI/CD
+
+The code builds automatically on CircleCI 2.0.
+
+Pushing a semver tag will trigger a publish to NPM and deploy to S3.
+
+Bump the version with `npm run release`.
 
 ## Program Syntax
 
