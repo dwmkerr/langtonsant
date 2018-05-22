@@ -45,7 +45,7 @@ jobs:
       - run: npm publish
 workflows:
   version: 2
-  tagged-build:
+  pipeline:
     jobs:
       - build
       - deploy:
@@ -53,10 +53,12 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only: feature/auto-deploy
       - publish:
           requires:
             - build
           filters:
+            branches:
+              ignore: /.*/
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /^v.*/
