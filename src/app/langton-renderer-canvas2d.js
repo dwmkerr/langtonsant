@@ -153,8 +153,9 @@ function render(langtonsAnt, canvas, options) {
   //  Draw the ant.
   var antX = langtonsAnt.antPosition.x * tileSize,
     antY = langtonsAnt.antPosition.y * tileSize;
+  const antState = langtonsAnt.antState;
 
-  ctx.fillStyle = antStateColours[langtonsAnt.antState];
+  ctx.fillStyle = antStateColours[antState];
 
   //  Tranform before we draw the ant, it makes it easier.
   ctx.save();
@@ -168,6 +169,10 @@ function render(langtonsAnt, canvas, options) {
   ctx.lineTo(0, (baseTileSize-4)/2);
   ctx.fill();
   ctx.closePath();
+  if (showAntStateNumber) {
+    ctx.fillStyle = '#000000CC';
+    ctx.fillText(antState, antX, antY);
+  }
   ctx.restore();
 
   //  Back to normal coordinates.

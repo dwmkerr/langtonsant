@@ -1,5 +1,7 @@
 import { render, hitTest } from './langton-renderer-canvas2d';
 
+import { compiler } from '../lib/compiler';
+
 /*
     Langton's Ant
 
@@ -35,19 +37,23 @@ function LangtonsAnt(configuration) {
   //  The state transformation matrix. For an ant of antState, on
   //  a tile of tileState, apply the given transformation to the ant,
   //  direction and tile.
-  this.transformationMatrix = [
-    //  Ant State 0
-    [
-      { changeAnt: +0, changeDirection: -90, changeTile: +1 },
-      { changeAnt: +0, changeDirection: +90, changeTile: +1 },
-    ]
-  ];
-  debugger;
-  if (configuration.transformationMatrix) {
-    this.transformationMatrix = configuration.transformationMatrix;
-  }
+  const program = `
+        (1, L, 1), (1, L, 1)
+        (1, R, 1), (0, 0, 0)
+  `;
+  this.transformationMatrix = compiler(program);
+  // this.transformationMatrix = [
+    // //  Ant State 0
+    // [
+      // { changeAnt: +0, changeDirection: -90, changeTile: +1 },
+      // { changeAnt: +0, changeDirection: +90, changeTile: +1 },
+    // ]
+  // ];
+  // if (configuration.transformationMatrix) {
+    // this.transformationMatrix = configuration.transformationMatrix;
+  // }
 
-  //  Termite program.
+  // //  Termite program.
   // this.transformationMatrix = [
     // //  Ant State 0
     // [
@@ -107,10 +113,10 @@ function LangtonsAnt(configuration) {
     var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
     //  Change tile, direction and ant.
-    this.advanceTile(this.antPosition.x, this.antPosition.y, transformation.changeTile);
+    this.setTileState(this.antPosition.x, this.antPosition.y, transformation.changeTile)
     this.antDirection += transformation.changeDirection;
     this.antDirection %= 360;
-    this.antState += transformation.changeAnt;
+    this.antState = transformation.changeAnt;
 
     //  Move the ant.
     if(this.antDirection === 0) {

@@ -1,6 +1,6 @@
 import LangtonsAnt from '../langtonsant.js';
 import { render } from '../langton-renderer-canvas2d';
-import compile from '../../lib/compiler';
+import { compiler } from '../../lib/compiler';
 
 function frequencyInterval(frequency) {
   //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
@@ -58,7 +58,7 @@ class MainController {
     //  Create a configuration and then compile the initial transformation
     //  matrix.
     this.configuration = 'LR';
-    this.transformationMatrix = compile(this.configuration);
+    this.transformationMatrix = compiler(this.configuration);
 
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = "stopped";

@@ -2,6 +2,11 @@
   "name": "langtonsant",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
+    "test": "mocha \"./{,!(node_modules)/**/}*.spec.js\"",
+    "test:watch": "mocha --watch \"./{,!(node_modules)/**/}*.spec.js\"",
+    "test:debug": "mocha --inspect-brk --watch \"./{,!(node_modules)/**/}*.spec.js\"",
+    "test:coverage": "nyc --reporter=html --report-dir=./artifacts/coverage _mocha \"./{,!(node_modules)/**/}*.spec.js\"",
+    "test:ci": "nyc --reporter=lcov --reporter=html --report-dir=./artifacts/coverage _mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./artifacts/tests/test-report.xml \"./{,!(node_modules)/**/}*.spec.js\"",
     "lint": "eslint .",
     "bundle": "webpack --mode production"
   },
@@ -15,12 +20,14 @@
     "webpack": "^4.6.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "mocha": "^5.2.0",
     "popper.js": "^1.14.3",
     "style-loader": "^0.21.0",
     "webpack-cli": "^2.0.15",
