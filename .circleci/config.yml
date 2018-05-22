@@ -34,7 +34,7 @@ jobs:
       - image: circleci/node:8.5
     steps:
       - checkout
-      - run: pip install awscli --upgrade --user
+      - run: sudo apt-get -y -qq install awscli
       - run: make deploy
   publish:
     docker:
