@@ -8,7 +8,7 @@
     "test:debug": "mocha --inspect-brk --watch \"./{,!(node_modules)/**/}*.spec.js\"",
     "test:coverage": "nyc --reporter=html --report-dir=./artifacts/coverage _mocha \"./{,!(node_modules)/**/}*.spec.js\"",
     "test:ci": "nyc --reporter=lcov --reporter=html --report-dir=./artifacts/coverage _mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./artifacts/tests/test-report.xml \"./{,!(node_modules)/**/}*.spec.js\"",
-    "lint": "eslint .",
+    "lint": "eslint --ignore-path .gitignore .",
     "bundle": "webpack --mode production",
     "release": "npm lint && npm test && standard-version",
     "preversion": "echo 'Version with \"npm run release\"' && exit 1"

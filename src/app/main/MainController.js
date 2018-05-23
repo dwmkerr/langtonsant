@@ -64,7 +64,6 @@ class MainController {
     ];
 
     //  Get location parameters.
-    debugger;
     const locationProgram = getUrlVars().p;
 
     //  Create a configuration and then compile the initial transformation
