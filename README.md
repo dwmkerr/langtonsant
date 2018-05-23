@@ -130,6 +130,15 @@ make deploy
 
 This command will require permissions to the `langtonsant.com` S3 bucket.
 
+### CI/CD
+
+There is a simple CI/CD pipeline for this project:
+
+1. All commits build, test and lint on CircleCI 2.0
+2. Any commit to master will be built. If tests pass, it will automatically deploy to www.langtonsant.com
+3. Pushing a semver tag will trigger a publish to NPM
+
+Bump the version with `npm run release`.
 
 ## Program Syntax
 
