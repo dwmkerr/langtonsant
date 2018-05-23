@@ -140,10 +140,13 @@ There is a simple CI/CD pipeline for this project:
 
 Bump the version with `npm run release`.
 
-## Program Syntax
+## Url Parameters
 
-- `L`: Move the current tile to the next state, turn *left*, move forwards.
-- `R`: Move the current tile to the next state, turn *right*, move forwards.
+A set of parameters can be provided in the url.
+
+| Parameter | Usage |
+|-----------|-------|
+| `p`       | The program string, e.g. `LLRL`. |
 
 ## Notes
 
