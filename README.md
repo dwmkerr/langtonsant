@@ -1,6 +1,6 @@
 # Langton's Ant
 
-[Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simple simulation in which we create a basic set of rules and apply them to a little universe. 
+[Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simple simulation in which we create a basic set of rules and apply them to a little universe.
 
 [Try it in your browser now](http://langtonsant.com)
 
@@ -8,7 +8,7 @@
 
 ## Example Programs
 
-The configuration for a simulation is called a 'program'. Some interesting 
+The configuration for a simulation is called a 'program'. Some interesting
 examples are below. There is also a guide to the program syntax.
 
 ### Basic Ant
@@ -19,6 +19,19 @@ LR
 
 For the first few moves, shows simple patterns. Quickly becomes chaotic, then
 forms a highway after about 10,000 moves.
+
+### Fibonacci Spiral
+
+This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
+
+```
+(1,L,1),(1,L,1)
+(1,R,1),(0,0,0)
+```
+
+[Open In Browser](http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
+
+[![Screenshot: Fibonacci Spiral](./docs/fibonacci.png)]( http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
 
 ### Ant Transformation Matrices
 
@@ -100,7 +113,7 @@ const matrix = compiler(input);
 console.log(matrix);
 // TODO
 ```
-  
+
 
 ## Developing
 
@@ -140,10 +153,13 @@ There is a simple CI/CD pipeline for this project:
 
 Bump the version with `npm run release`.
 
-## Program Syntax
+## Url Parameters
 
-- `L`: Move the current tile to the next state, turn *left*, move forwards.
-- `R`: Move the current tile to the next state, turn *right*, move forwards.
+A set of parameters can be provided in the url.
+
+| Parameter | Usage |
+|-----------|-------|
+| `p`       | The program string, e.g. `LLRL`. |
 
 ## Notes
 
@@ -158,5 +174,3 @@ The best solution would probably be to simple examine the rank and order of the 
 Very useful information came from:
 
 - [https://github.com/rm-hull/turmites](https://github.com/rm-hull/turmites)
-
-

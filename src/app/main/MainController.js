@@ -2,6 +2,14 @@ import { render } from '../langton-renderer-canvas2d';
 import LangtonsAnt from '../../lib/langtonsant.js';
 import { compiler } from '../../lib/compiler';
 
+function getUrlVars() {
+  var vars = {};
+  window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+
 function frequencyInterval(frequency) {
   //  We can't set timers below 10ms, so any frequency beyond 100 Hz is going to
   //  be cropped down. 150Hz becomes 7.5Hz with 2 ticks per iteration.
@@ -55,12 +63,15 @@ class MainController {
       '#FFF7F8'
     ];
 
+    //  Get location parameters.
+    const locationProgram = getUrlVars().p;
+
     //  Create a configuration and then compile the initial transformation
     //  matrix.
     //  The state transformation matrix. For an ant of antState, on
     //  a tile of tileState, apply the given transformation to the ant,
     //  direction and tile.
-    const program = `
+    const program = locationProgram || `
         (1, L, 1), (1, L, 1)
         (1, R, 1), (0, 0, 0)
   `;
