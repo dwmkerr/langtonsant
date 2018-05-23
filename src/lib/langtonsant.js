@@ -1,5 +1,3 @@
-import { compiler } from '../lib/compiler';
-
 /*
     Langton's Ant
 
@@ -9,7 +7,9 @@ import { compiler } from '../lib/compiler';
     or backwards.
     */
 
-function LangtonsAnt(/* configuration */) {
+function LangtonsAnt(configuration) {
+  if (!configuration) throw new Error('\'configuration\' is required');
+  if (!configuration.transformationMatrix) throw new Error('\'configuration.transformationMatrix\' is required');
 
   //  The position of the ant. The state is used for termites.
   this.antPosition = {x: 0, y: 0};
@@ -32,14 +32,7 @@ function LangtonsAnt(/* configuration */) {
   //  The number of ticks.
   this.ticks = 0;
 
-  //  The state transformation matrix. For an ant of antState, on
-  //  a tile of tileState, apply the given transformation to the ant,
-  //  direction and tile.
-  const program = `
-        (1, L, 1), (1, L, 1)
-        (1, R, 1), (0, 0, 0)
-  `;
-  this.transformationMatrix = compiler(program);
+  this.transformationMatrix = configuration.transformationMatrix;
 
   //  Get a tile state. Tiles which have not yet been touched have state zero.
   this.getTileState = function(x, y) {
@@ -137,4 +130,4 @@ function LangtonsAnt(/* configuration */) {
   };
 }
 
-export default LangtonsAnt;
+module.exports = LangtonsAnt;
