@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/dwmkerr/langtonsant/compare/v0.1.0...v0.2.0) (2018-05-23)
+
+
+### Features
+
+* **sharing:** support URL Params ([#7](https://github.com/dwmkerr/langtonsant/issues/7)) ([8617328](https://github.com/dwmkerr/langtonsant/commit/8617328))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2018-05-22)
 
