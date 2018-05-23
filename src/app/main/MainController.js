@@ -1,5 +1,5 @@
-import LangtonsAnt from '../langtonsant.js';
 import { render } from '../langton-renderer-canvas2d';
+import LangtonsAnt from '../../lib/langtonsant.js';
 import { compiler } from '../../lib/compiler';
 
 function frequencyInterval(frequency) {
@@ -57,8 +57,15 @@ class MainController {
 
     //  Create a configuration and then compile the initial transformation
     //  matrix.
-    this.configuration = 'LR';
-    this.transformationMatrix = compiler(this.configuration);
+    //  The state transformation matrix. For an ant of antState, on
+    //  a tile of tileState, apply the given transformation to the ant,
+    //  direction and tile.
+    const program = `
+        (1, L, 1), (1, L, 1)
+        (1, R, 1), (0, 0, 0)
+  `;
+    this.configuration = program;
+    this.transformationMatrix = compiler(program);
 
     //  None scope variables. These are used by the controller, but not exposed.
     var currentState = 'stopped';
