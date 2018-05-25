@@ -18,6 +18,7 @@
     "bootstrap": "^4.1.0",
     "bootstrap3": "^3.3.5",
     "express": "3.4.x",
+    "j2-cli": "^1.0.1",
     "jquery": "^3.3.1",
     "react": "^16.3.2",
     "webpack": "^4.6.0"

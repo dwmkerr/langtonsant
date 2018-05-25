@@ -72,8 +72,8 @@ class MainController {
     //  a tile of tileState, apply the given transformation to the ant,
     //  direction and tile.
     const program = locationProgram || `
-        (1, L, 1), (1, L, 1)
-        (1, R, 1), (0, 0, 0)
+ (1, L, 1), (1, L, 0)
+ (0, R, 1), (1, 0, 1)
   `;
     this.configuration = program;
     this.transformationMatrix = compiler(program);

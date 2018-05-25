@@ -1,3 +1,8 @@
+function between(val, low, high) {
+  const raw = (val - low) % (high - low);
+  return raw + low;
+}
+
 /*
     Langton's Ant
 
@@ -68,9 +73,9 @@ function LangtonsAnt(configuration) {
   this.advanceTile = function(x, y, direction = 1) {
     //  Get the state, increment it, roll over if we pass
     //  over the last and update the tile state.
+
     var state = this.getTileState(x, y) + direction;
-    state %= this.transformationMatrix[0].length;
-    this.setTileState(x, y, state);
+    this.setTileState(x, y, between(state, 0, this.transformationMatrix[0].length));
   };
 
   //  Take a step forwards.
@@ -80,10 +85,9 @@ function LangtonsAnt(configuration) {
     var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
     //  Change tile, direction and ant.
-    this.setTileState(this.antPosition.x, this.antPosition.y, transformation.changeTile);
-    this.antDirection += transformation.changeDirection;
-    this.antDirection %= 360;
-    this.antState = transformation.changeAnt;
+    this.advanceTile(this.antPosition.x, this.antPosition.y, transformation.tile);
+    this.antDirection = between(this.antDirection + transformation.direction, 0, 360);
+    this.antState = between(this.antState + transformation.ant, 0, this.transformationMatrix.length);
 
     //  Move the ant.
     if(this.antDirection === 0) {
@@ -123,10 +127,9 @@ function LangtonsAnt(configuration) {
     var transformation = this.getTransformation(this.antState, this.antPosition.x, this.antPosition.y);
 
     //  Change tile, direction and ant (all backwards).
-    this.advanceTile(this.antPosition.x, this.antPosition.y, -transformation.changeTile);
-    this.antDirection -= transformation.changeDirection;
-    this.antDirection %= 360;
-    this.antState -= transformation.changeAnt;
+    this.advanceTile(this.antPosition.x, this.antPosition.y, -transformation.tile);
+    this.antDirection = between(this.antDirection - transformation.direction, 0, 360);
+    this.antState = between(this.antState - transformation.ant, 0, this.transformationMatrix.length);
   };
 }
 
