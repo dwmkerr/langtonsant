@@ -32,16 +32,6 @@ function expandShorthand(input) {
   if (input.match(/^[LRlr]+$/) === null) return input;
 
   return Array.from(input).map(i => `(0,${i},1)`).join();
-
-  // //  Just build the tuples from the input.
-  // let program = '';
-  // for (let i = 0; i < input.length; i++) {
-    // const c = input[i];
-    // const next = i + 1;
-    // program += `(0,${c},${next === input.length ? 0 : next})`;
-  // }
-
-  // return program;
 }
 
 function normaliseTuples(input) {
