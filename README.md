@@ -30,9 +30,29 @@ Some interesting example simulations are below.
     <th>Screenshot</th>
     <th>Description</th>
   </tr>
+  
 <tr>
   <td>
-    [![Screenshot: Fibonacci Spiral](./docs/fibonacci.png)](http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0))
+    <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
+  </td>
+<td>
+<strong>Langton's Ant</strong>
+<p>
+For the first few moves, shows simple patterns. Quickly becomes chaotic, then
+forms a highway after about 10,000 moves.
+
+```
+LR
+```
+
+[Open In Browser](http://www.langtonsant.com/?p=LR)
+</p>
+</td>
+</tr>
+
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
 <strong>Fibonnaci Spiral</strong>
@@ -55,12 +75,14 @@ This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 <td>
 <strong>Symmetric Growing Lines</strong>
 <p>
+A pair of lines which grow forever.
+
 ```
 (1, 0, 1), (1, L, 1)
 (0, R, 1), (1, 0, 1)
 ```
 
-A pair of lines which grow forever.
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1))
 </p>
 </td>
 </tr>
@@ -71,12 +93,14 @@ A pair of lines which grow forever.
 <td>
 <strong>Magic Pyramid</strong>
 <p>
+A pyramid which grows one side at a time.
+
 ```
 (1, 0, 1), (0, L, 1)
 (0, R, 1), (1, 0, 1)
 ```
 
-A pyramid which grows one side at a time.
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1))
 </p>
 </td>
 </tr>
@@ -87,12 +111,14 @@ A pyramid which grows one side at a time.
 <td>
 <strong>Snail Shell</strong>
 <p>
+A snail shell.
+  
 ```
 (1,R,0) (0,L,1)
 (0,L,1) (1,R,1)
 ```
 
-A snail shell.
+[Open In Browser](http://www.langtonsant.com/?p=(1,R,0),(0,L,1);(0,L,1)(1,R,1))
 </p>
 </td>
 </tr>
@@ -103,26 +129,19 @@ A snail shell.
 <td>
 <strong>Spiral</strong>
 <p>
+A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
+
 ```
 (1,0,1) (0,L,0)
 (0,R,1) (1,0,1)
 ```
 
-A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1) (0,L,0);(0,R,1) (1,0,1))
 </p>
 </td>
 </tr>
 
 </table>
-
-### Basic Ant
-
-```
-LR
-```
-
-For the first few moves, shows simple patterns. Quickly becomes chaotic, then
-forms a highway after about 10,000 moves.
 
 ## Ant Programs
 
