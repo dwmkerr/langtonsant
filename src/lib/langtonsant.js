@@ -1,6 +1,6 @@
 function between(val, low, high) {
   const raw = (val - low) % (high - low);
-  return raw + low;
+  return raw < low ? high + raw : raw + low;
 }
 
 /*

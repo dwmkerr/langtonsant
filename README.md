@@ -30,12 +30,13 @@ Some interesting example simulations are below.
     <th>Screenshot</th>
     <th>Description</th>
   </tr>
-  
+
 <tr>
   <td>
+    <a href="http://www.langtonsant.com/?p=LR"><img src="./docs/samples/langtonsant.png" alt="Screenshot: Langton's Ant" /></a>
   </td>
 <td>
-<strong>Langton's Ant</strong>
+<p><strong>Langton's Ant</strong></p>
 <p>
 For the first few moves, shows simple patterns. Quickly becomes chaotic, then
 forms a highway after about 10,000 moves.
@@ -54,7 +55,7 @@ LR
     <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
-<strong>Fibonnaci Spiral</strong>
+<p><strong>Fibonnaci Spiral</strong></p>
 <p>
 This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 
@@ -73,7 +74,7 @@ This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
     <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
-<strong>Symmetric Growing Lines</strong>
+<p><strong>Symmetric Growing Lines</strong></p>
 <p>
 A pair of lines which grow forever.
 
@@ -91,7 +92,7 @@ A pair of lines which grow forever.
   <td>
   </td>
 <td>
-<strong>Magic Pyramid</strong>
+<p><strong>Magic Pyramid</strong></p>
 <p>
 A pyramid which grows one side at a time.
 
@@ -109,10 +110,10 @@ A pyramid which grows one side at a time.
   <td>
   </td>
 <td>
-<strong>Snail Shell</strong>
+<p><strong>Snail Shell</strong></p>
 <p>
 A snail shell.
-  
+
 ```
 (1,R,0) (0,L,1)
 (0,L,1) (1,R,1)
@@ -127,7 +128,7 @@ A snail shell.
   <td>
   </td>
 <td>
-<strong>Spiral</strong>
+<p><strong>Spiral</strong></p>
 <p>
 A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
 
