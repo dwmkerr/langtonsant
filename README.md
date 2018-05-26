@@ -25,9 +25,95 @@ To run the project locally, and check the [Developer Guide](#Developer-Guide) to
 
 Some interesting example simulations are below.
 
-| Screenshot | Description |
-|------------|-------------|
-| TODO       |             |
+<table>
+  <tr>
+    <th>Screenshot</th>
+    <th>Description</th>
+  </tr>
+<tr>
+  <td>
+    [![Screenshot: Fibonacci Spiral](./docs/fibonacci.png)](http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0))
+  </td>
+<td>
+<strong>Fibonnaci Spiral</strong>
+<p>
+This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
+
+```
+(1,L,1),(1,L,0)
+(0,R,1),(1,0,1)
+```
+
+[Open In Browser](http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
+</p>
+</td>
+</tr>
+
+<tr>
+  <td>
+  </td>
+<td>
+<strong>Symmetric Growing Lines</strong>
+<p>
+```
+(1, 0, 1), (1, L, 1)
+(0, R, 1), (1, 0, 1)
+```
+
+A pair of lines which grow forever.
+</p>
+</td>
+</tr>
+
+<tr>
+  <td>
+  </td>
+<td>
+<strong>Magic Pyramid</strong>
+<p>
+```
+(1, 0, 1), (0, L, 1)
+(0, R, 1), (1, 0, 1)
+```
+
+A pyramid which grows one side at a time.
+</p>
+</td>
+</tr>
+
+<tr>
+  <td>
+  </td>
+<td>
+<strong>Snail Shell</strong>
+<p>
+```
+(1,R,0) (0,L,1)
+(0,L,1) (1,R,1)
+```
+
+A snail shell.
+</p>
+</td>
+</tr>
+
+<tr>
+  <td>
+  </td>
+<td>
+<strong>Spiral</strong>
+<p>
+```
+(1,0,1) (0,L,0)
+(0,R,1) (1,0,1)
+```
+
+A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
+</p>
+</td>
+</tr>
+
+</table>
 
 ### Basic Ant
 
@@ -37,60 +123,6 @@ LR
 
 For the first few moves, shows simple patterns. Quickly becomes chaotic, then
 forms a highway after about 10,000 moves.
-
-### Fibonacci Spiral
-
-This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
-
-```
-(1,L,1),(1,L,0)
-(0,R,1),(1,0,1)
-```
-
-[Open In Browser](http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
-
-[![Screenshot: Fibonacci Spiral](./docs/fibonacci.png)]( http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
-
-### Symmetric Growing Lines
-
-```
-(1, 0, 1), (1, L, 1)
-(0, R, 1), (1, 0, 1)
-```
-
-A pair of lines which grow forever.
-
-### Magic Pyramid
-
-```
-(1, 0, 1), (0, L, 1)
-(0, R, 1), (1, 0, 1)
-```
-
-A pyramid which grows one side at a time.
-
-### Snail Shell
-
-```
-(1,R,0) (0,L,1)
-(0,L,1) (1,R,1)
-```
-
-A snail shell.
-
-### Spiral
-
-```
-(1,0,1) (0,L,0)
-(0,R,1) (1,0,1)
-```
-
-A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
-
-
-
-
-A pyramid which grows one side at a time.
 
 ## Ant Programs
 
