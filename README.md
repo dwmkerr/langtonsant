@@ -33,7 +33,6 @@ Some interesting example simulations are below.
   
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
 <strong>Langton's Ant</strong>
@@ -71,6 +70,7 @@ This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 
 <tr>
   <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
 <strong>Symmetric Growing Lines</strong>
