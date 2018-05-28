@@ -71,7 +71,7 @@ This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Fibonacci Spiral" /></a>
+    <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Lines" /></a>
   </td>
 <td>
 <p><strong>Symmetric Growing Lines</strong></p>
@@ -90,9 +90,10 @@ A pair of lines which grow forever.
 
 <tr>
   <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1)"><img src="./docs/samples/pyramid.png" alt="Screenshot: Pyramid" /></a>
   </td>
 <td>
-<p><strong>Magic Pyramid</strong></p>
+<strong>Magic Pyramid</strong>
 <p>
 A pyramid which grows one side at a time.
 
@@ -108,6 +109,7 @@ A pyramid which grows one side at a time.
 
 <tr>
   <td>
+    <a href="http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1)"><img src="./docs/samples/snail.png" alt="Screenshot: Snail" /></a>
   </td>
 <td>
 <p><strong>Snail Shell</strong></p>
@@ -119,13 +121,14 @@ A snail shell.
 (0,L,1) (1,R,1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,R,0),(0,L,1);(0,L,1)(1,R,1))
+[Open In Browser](http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1))
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1)"><img src="./docs/samples/spiral.png" alt="Screenshot: Spiral" /></a>
   </td>
 <td>
 <p><strong>Spiral</strong></p>
@@ -137,7 +140,7 @@ A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has 
 (0,R,1) (1,0,1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,0,1) (0,L,0);(0,R,1) (1,0,1))
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1))
 </p>
 </td>
 </tr>
@@ -190,6 +193,8 @@ For example:
 
 In this matrix (which defines a Fibonacci Spiral Turmite) we see the transformations which are applied for every combination of ant state and tile state.
 
+Directions can be specified in degrees (as above), or using `L` for left, `R` for right and `U` for U-turn (-90, 90 and 180 degrees respectively).
+
 ### Program Syntax
 
 A program is just a represenation of each element in the matrix. For example, the spiral matrix above can be written as:
@@ -205,7 +210,7 @@ One of the goals of this project is to facilitate the easy sharing of this matri
 0. Any semi-colon is converted into a newline (allowing a program to be written on a single line if needed
 1. All whitespace is eliminated, except the newline at the end of each row
 1. Commmas are optional between tuples
-4. If the matrix is not rectangular, there are an incorrect number of tuples, an error is thrown
+4. If the matrix is not rectangular, or there are an incorrect number of tuples, an error is thrown
 
 The compiler itself can be used with the following code:
 
