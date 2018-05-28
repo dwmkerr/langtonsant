@@ -1,102 +1,216 @@
 # Langton's Ant
 
-[Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simple simulation in which we create a basic set of rules and apply them to a little universe.
+[Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simulation which has a simple set of rules, which can produce [surprisingly complicated]() results. It is a great example of a Chaotic System, as is the case with most [Cellular Automata]().
 
 [Try it in your browser now](http://langtonsant.com)
 
 ![Langton's Ant](./docs/langtonsant.jpg)
 
-## Example Programs
+This project includes:
 
-The configuration for a simulation is called a 'program'. Some interesting
-examples are below. There is also a guide to the program syntax.
+1. The core simulation engine
+2. A website which can run and render the simulation
+3. A specification, syntax and compiler for a simple language to express the rules of such a system
 
-### Basic Ant
+Clone the code and run:
+
+```
+npm i && npm start
+
+```
+
+To run the project locally, and check the [Developer Guide](#Developer-Guide) to see how to work with the code.
+
+## Example Simulations
+
+Some interesting example simulations are below.
+
+<table>
+  <tr>
+    <th>Screenshot</th>
+    <th>Description</th>
+  </tr>
+
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=LR"><img src="./docs/samples/langtonsant.png" alt="Screenshot: Langton's Ant" /></a>
+  </td>
+<td>
+<p><strong>Langton's Ant</strong></p>
+<p>
+For the first few moves, shows simple patterns. Quickly becomes chaotic, then
+forms a highway after about 10,000 moves.
 
 ```
 LR
 ```
 
-For the first few moves, shows simple patterns. Quickly becomes chaotic, then
-forms a highway after about 10,000 moves.
+[Open In Browser](http://www.langtonsant.com/?p=LR)
+</p>
+</td>
+</tr>
 
-### Fibonacci Spiral
-
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
+  </td>
+<td>
+<p><strong>Fibonnaci Spiral</strong></p>
+<p>
 This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 
 ```
-(1,L,1),(1,L,1)
-(1,R,1),(0,0,0)
+(1,L,1),(1,L,0)
+(0,R,1),(1,0,1)
 ```
 
 [Open In Browser](http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
+</p>
+</td>
+</tr>
 
-[![Screenshot: Fibonacci Spiral](./docs/fibonacci.png)]( http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
-
-### Ant Transformation Matrices
-
-The Langton's Ant transformation matix is just a trivial form of a Turmite transformation matrix. An Ant is a Turmite which only has one state.
-
-The Transformation Matrix for an Ant can be specified using the Turmite Transoformation Matrix syntax below, or shorthand.
-
-Shorthand assumes that we have a tile state for each letter, and we always move forwards one tile state at a time, with the final tile always 'looping back' to the first tile.
-
-Therefore, a program like this:
-
-```
-LLRL
-```
-
-Is just shorthand for the following matrix:
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Lines" /></a>
+  </td>
+<td>
+<p><strong>Symmetric Growing Lines</strong></p>
+<p>
+A pair of lines which grow forever.
 
 ```
-|      | T: 0        | T: 1        | T: 2        | T: 3        |
-|------|-------------|-------------|-------------|-------------|
-| a: 0 | (0, -90, 1) | (0, -90, 2) | (0, +90, 2) | (0, -90, 0) |
-
-i.e.         L             L             R             L
+(1, 0, 1), (1, L, 1)
+(0, R, 1), (1, 0, 1)
 ```
 
-### Turmite Transformation Matrices
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1))
+</p>
+</td>
+</tr>
 
-The state transformation matrix defines how the following characteristics of the system can be altered:
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1)"><img src="./docs/samples/pyramid.png" alt="Screenshot: Pyramid" /></a>
+  </td>
+<td>
+<strong>Magic Pyramid</strong>
+<p>
+A pyramid which grows one side at a time.
 
-- The Ant State
-- The Ant Direction
-- The Tile State
+```
+(1, 0, 1), (0, L, 1)
+(0, R, 1), (1, 0, 1)
+```
 
-A transformation is a three-tuple:
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1))
+</p>
+</td>
+</tr>
 
-- `(1, 90, 0)`: Ant State becomes `1`, Ant turns `90` clockwise, Tile State becomes `0`
-- `(2, -90, 1)`: Ant State becomes `2`, Ant turns `90` counter-clockwise, Tile State becomes `1`
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1)"><img src="./docs/samples/snail.png" alt="Screenshot: Snail" /></a>
+  </td>
+<td>
+<p><strong>Snail Shell</strong></p>
+<p>
+A snail shell.
 
-Direction changes can also be specified with letters:
+```
+(1,R,0) (0,L,1)
+(0,L,1) (1,R,1)
+```
 
-- `L`: Left, i.e. 90 counter clockwise
-- `R`: Right, i.e. 90 counter clockwise
-- `U`: U-Turn, i.e. 180 degrees
+[Open In Browser](http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1))
+</p>
+</td>
+</tr>
 
-For every combination of Ant State and Tile State, an entry in the matrix is required. Here is an example matrix, for a Fibonacci Spiral:
+<tr>
+  <td>
+    <a href="http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1)"><img src="./docs/samples/spiral.png" alt="Screenshot: Spiral" /></a>
+  </td>
+<td>
+<p><strong>Spiral</strong></p>
+<p>
+A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has minor effects, but I have not been able to shake it off the spiral path, which is bizarre.
+
+```
+(1,0,1) (0,L,0)
+(0,R,1) (1,0,1)
+```
+
+[Open In Browser](http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1))
+</p>
+</td>
+</tr>
+
+</table>
+
+## Ant Programs
+
+Langton's Ant is a trivial example of a [Turmite](). To allow different configurations to easily be conastructed and shared, I have defined a syntax for a 'program'. A program is simply the set of rules for the system.
+
+The program syntax is designed to make it easy to express the rules of the system with plain text, in a readable format:
+
+![Diagram: The Compiler](./docs/compiler.png)
+
+The simulation applies the rules of the matrix to a given state, producting a new state.
+
+![Diagram: The Simulation](./docs/simulation.png)
+
+An interface is layered on top. It renders the state, runs the simulation and provides controls to configures parameters.
+
+### The Transformation Matrix
+
+Before understanding how a program works, it is important to understand the transformation matrix.
+
+The transformation matrix is the complete set of rules for a turmite or ant simulation. The universe looks like this:
+
+![Diagram: The Universe](./docs/universe.png)
+
+An _element_ of the transformation defines that when the ant is in a given *ant state* and on a tile with a given *tile state*, what *ant direction change* will be made, and what *tile state change* will occur on the tile the ant leaves. This is a three-tuple:
+
+```
+(Ant State Change, Ant Direction Change, Tile State Change)
+```
+
+For example:
+
+- `(1, 90, 0)`: Ant State increases `1`, Ant turns `90` clockwise, Tile State increases `0`
+- `(0, -90, 1)`: Ant State increases `0`, Ant turns `90` counter-clockwise, Tile State increases `1`
+
+The _Transformation Matrix_ is the complete set of state transformations which are required to define a complete set of rules.
+
+For example:
 
 ```
 |      | T: 0      | T: 1      |
 |------|-----------|-----------|
-| a: 0 | (1,-90,1) | (1,-90,1) |
-| a: 1 | (1,90,1)  | (0,0,0)   |
+| a: 0 | (1,-90,1) | (1,-90,0) |
+| a: 1 | (0,90,1)  | (0,0,1)   |
 ```
 
-A state transformation matrix is a simple line of text which contains each three tuple, one after the other. For example, the matix above becomes:
+In this matrix (which defines a Fibonacci Spiral Turmite) we see the transformations which are applied for every combination of ant state and tile state.
+
+Directions can be specified in degrees (as above), or using `L` for left, `R` for right and `U` for U-turn (-90, 90 and 180 degrees respectively).
+
+### Program Syntax
+
+A program is just a represenation of each element in the matrix. For example, the spiral matrix above can be written as:
 
 ```
-(1,-90,1)(1,-90,1)(1,90,1)(0,0,0)
+(1,-90,1) (1,-90,0)
+(0,90,1)  (0,0,1)
 ```
 
 One of the goals of this project is to facilitate the easy sharing of this matrix. Readability and compactness are important. The compiler which builds the matrix from the input follows the following rules:
 
-1. All whitespace is eliminated
-2. If the program only contains `L` or `R` characters, it is expanded from shorthand, as described in the section on [Shorthand Ant Transformation Matrices]()
-3. If there are no commas between set of tuples, they are added, then all brackets are removed, leading to a simple sequence (e.g. `1,-90,1,1,-90,1,1,90,1,0,0,0`)
-4. If there tuples do not form a matrix with sufficient rank or order to cover all of the states defined in the tuples, an error is thrown
+0. If the program only contains `L` or `R` characters, it is expanded from shorthand, as described in the section on [Shorthand Ant Transformation Matrices](#Shorthand-Ant-Programs)
+0. Any semi-colon is converted into a newline (allowing a program to be written on a single line if needed
+1. All whitespace is eliminated, except the newline at the end of each row
+1. Commmas are optional between tuples
+4. If the matrix is not rectangular, or there are an incorrect number of tuples, an error is thrown
 
 The compiler itself can be used with the following code:
 
@@ -104,8 +218,8 @@ The compiler itself can be used with the following code:
 const { compiler } = require('langtonsant');
 
 const input = `
-  (1, L, 1), (1, L, 1)
-  (1, R, 1), (0, 0, 0)
+  (1, L, 1) (1, L, 1)
+  (1, R, 1) (0, 0, 0)
 `;
 
 const matrix = compiler(input);
@@ -114,6 +228,25 @@ console.log(matrix);
 // TODO
 ```
 
+### Shorthand Ant Programs
+
+The Langton's Ant transformation matix is just a trivial form of a Turmite transformation matrix. An Ant is a Turmite which only has one state.
+
+An ant program can be expressed using the full syntax above, or in a more compact form, composed just of `L`s and `R`s, e.g:
+
+```
+LLRL
+```
+
+Which is just shorthand for the following matrix:
+
+```
+|      | T: 0        | T: 1        | T: 2        | T: 3        |
+|------|-------------|-------------|-------------|-------------|
+| a: 0 | (0, -90, 1) | (0, -90, 1) | (0, +90, 1) | (0, -90, 1) |
+
+i.e.          L             L             R             L
+```
 
 ## Developing
 
@@ -160,14 +293,6 @@ A set of parameters can be provided in the url.
 | Parameter | Usage |
 |-----------|-------|
 | `p`       | The program string, e.g. `LLRL`. |
-
-## Notes
-
-In the original version of this project, the transformation matrix was more simple (not supporting turmites) and worked by applying a *delta* to the tile state. This meant that we could actually play the universe 'backwords', by applying the state transformations in reverse. With this latest version, we cannot do this, as the transformations are absolutely, i.e. we change a tile from A to B, without applying a vector.
-
-This feels wrong - applying a vector is cleaner in a number of ways. However, vectors make it harder (at least with my quick attempts) to work out the rank and order of the transformation matrix, as we don't explicitly know how many states there should be. It might be worth considering a number of states for the ant and tiles as input to the rules, so that we can return a vector based model.
-
-The best solution would probably be to simple examine the rank and order of the matrix, which might actually simplify the code. We would need to use a semicolon as as line separator for single line programs however.
 
 ## References
 
