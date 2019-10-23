@@ -1,6 +1,6 @@
 # Langton's Ant
 
-[![CircleCI](https://circleci.com/gh/dwmkerr/langtonsant.svg?style=shield)](https://circleci.com/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
+[![CircleCI](https://circleci.com/gh/dwmkerr/langtonsant.svg?style=shield)](https://circleci.com/gh/dwmkerr/langtonsant) [![codecov](https://codecov.io/gh/dwmkerr/langtonsant/branch/master/graph/badge.svg)](https://codecov.io/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
 
 [Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simulation which has a simple set of rules, which can produce [surprisingly complicated]() results. It is a great example of a Chaotic System, as is the case with most [Cellular Automata]().
 
@@ -27,7 +27,7 @@ This project includes:
     * [Running the Code](#running-the-code)
     * [Deploying the Code](#deploying-the-code)
     * [CI/CD](#cicd)
-    * [Url Parameters](#url-parameters)
+    * [URL Parameters](#url-parameters)
 * [References](#references)
 
 <!-- vim-markdown-toc -->
@@ -307,9 +307,22 @@ There is a simple CI/CD pipeline for this project:
 
 Bump the version with `npm run release`.
 
-## Url Parameters
+To test the build, install the CircleCI CLI:
 
-A set of parameters can be provided in the url.
+```sh
+curl -fLSs https://circle.ci/cli | bash
+```
+
+Then run the build:
+
+```sh
+circleci config validate
+circleci local execute --job build
+```
+
+## URL Parameters
+
+A set of parameters can be provided in the URL.
 
 | Parameter | Usage |
 |-----------|-------|
