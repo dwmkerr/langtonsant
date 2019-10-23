@@ -41,7 +41,7 @@ function LangtonsAnt(configuration) {
 
   //  Get a tile state. Tiles which have not yet been touched have state zero.
   this.getTileState = function(x, y) {
-    if(this.tiles[x] === undefined) {
+    if (this.tiles[x] === undefined) {
       return 0;
     }
     return this.tiles[x][y] || 0;
@@ -90,14 +90,13 @@ function LangtonsAnt(configuration) {
     this.antState = between(this.antState + transformation.ant, 0, this.transformationMatrix.length);
 
     //  Move the ant.
-    if(this.antDirection === 0) {
+    if (this.antDirection === 0) {
       this.antPosition.y++;
     } else if (this.antDirection === 90 || this.antDirection === -270) {
       this.antPosition.x--;
     } else if (this.antDirection === 180 || this.antDirection === -180) {
       this.antPosition.y--;
-    }
-    else {
+    } else {
       this.antPosition.x++;
     }
 
@@ -112,14 +111,13 @@ function LangtonsAnt(configuration) {
     this.ticks--;
 
     //  Move the ant backwards.
-    if(this.antDirection === 0) {
+    if (this.antDirection === 0) {
       this.antPosition.y--;
     } else if (this.antDirection === 90 || this.antDirection === -270) {
       this.antPosition.x++;
     } else if (this.antDirection === 180 || this.antDirection === -180) {
       this.antPosition.y++;
-    }
-    else {
+    } else {
       this.antPosition.x--;
     }
 
