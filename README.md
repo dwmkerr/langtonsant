@@ -12,6 +12,26 @@ This project includes:
 2. A website which can run and render the simulation
 3. A specification, syntax and compiler for a simple language to express the rules of such a system
 
+
+<!-- vim-markdown-toc GFM -->
+
+* [Introduction](#introduction)
+* [Example Simulations](#example-simulations)
+* [Ant Programs](#ant-programs)
+    * [The Transformation Matrix](#the-transformation-matrix)
+    * [Program Syntax](#program-syntax)
+    * [Shorthand Ant Programs](#shorthand-ant-programs)
+* [Developing](#developing)
+    * [Running the Code](#running-the-code)
+    * [Deploying the Code](#deploying-the-code)
+    * [CI/CD](#cicd)
+    * [Url Parameters](#url-parameters)
+* [References](#references)
+
+<!-- vim-markdown-toc -->
+
+# Introduction
+
 Clone the code and run:
 
 ```
@@ -21,7 +41,7 @@ npm i && npm start
 
 To run the project locally, and check the [Developer Guide](#Developer-Guide) to see how to work with the code.
 
-## Example Simulations
+# Example Simulations
 
 Some interesting example simulations are below.
 
@@ -147,7 +167,7 @@ A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has 
 
 </table>
 
-## Ant Programs
+# Ant Programs
 
 Langton's Ant is a trivial example of a [Turmite](). To allow different configurations to easily be conastructed and shared, I have defined a syntax for a 'program'. A program is simply the set of rules for the system.
 
@@ -161,7 +181,7 @@ The simulation applies the rules of the matrix to a given state, producting a ne
 
 An interface is layered on top. It renders the state, runs the simulation and provides controls to configures parameters.
 
-### The Transformation Matrix
+## The Transformation Matrix
 
 Before understanding how a program works, it is important to understand the transformation matrix.
 
@@ -195,9 +215,9 @@ In this matrix (which defines a Fibonacci Spiral Turmite) we see the transformat
 
 Directions can be specified in degrees (as above), or using `L` for left, `R` for right and `U` for U-turn (-90, 90 and 180 degrees respectively).
 
-### Program Syntax
+## Program Syntax
 
-A program is just a represenation of each element in the matrix. For example, the spiral matrix above can be written as:
+A program is just a representation of each element in the matrix. For example, the spiral matrix above can be written as:
 
 ```
 (1,-90,1) (1,-90,0)
@@ -209,7 +229,7 @@ One of the goals of this project is to facilitate the easy sharing of this matri
 0. If the program only contains `L` or `R` characters, it is expanded from shorthand, as described in the section on [Shorthand Ant Transformation Matrices](#Shorthand-Ant-Programs)
 0. Any semi-colon is converted into a newline (allowing a program to be written on a single line if needed
 1. All whitespace is eliminated, except the newline at the end of each row
-1. Commmas are optional between tuples
+1. Commas are optional between tuples
 4. If the matrix is not rectangular, or there are an incorrect number of tuples, an error is thrown
 
 The compiler itself can be used with the following code:
@@ -225,12 +245,11 @@ const input = `
 const matrix = compiler(input);
 
 console.log(matrix);
-// TODO
 ```
 
-### Shorthand Ant Programs
+## Shorthand Ant Programs
 
-The Langton's Ant transformation matix is just a trivial form of a Turmite transformation matrix. An Ant is a Turmite which only has one state.
+The Langton's Ant transformation matrix is just a trivial form of a Turmite transformation matrix. An Ant is a Turmite which only has one state.
 
 An ant program can be expressed using the full syntax above, or in a more compact form, composed just of `L`s and `R`s, e.g:
 
@@ -248,9 +267,9 @@ Which is just shorthand for the following matrix:
 i.e.          L             L             R             L
 ```
 
-## Developing
+# Developing
 
-### Running the Code
+## Running the Code
 
 Just clone the repo, then run:
 
@@ -260,7 +279,7 @@ npm install && npm start
 
 To install dependencies and run the simulation in development mode.
 
-### Deploying the Code
+## Deploying the Code
 
 To build the distribution, run:
 
@@ -276,12 +295,12 @@ make deploy
 
 This command will require permissions to the `langtonsant.com` S3 bucket.
 
-### CI/CD
+## CI/CD
 
 There is a simple CI/CD pipeline for this project:
 
 1. All commits build, test and lint on CircleCI 2.0
-2. Any commit to master will be built. If tests pass, it will automatically deploy to www.langtonsant.com
+2. Any commit to master will be built. If tests pass, it will automatically deploy to [www.langtonsant.com](www.langtonsant.com)
 3. Pushing a semver tag will trigger a publish to NPM
 
 Bump the version with `npm run release`.
@@ -294,7 +313,7 @@ A set of parameters can be provided in the url.
 |-----------|-------|
 | `p`       | The program string, e.g. `LLRL`. |
 
-## References
+# References
 
 Very useful information came from:
 
