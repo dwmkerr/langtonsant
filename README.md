@@ -1,6 +1,6 @@
 # Langton's Ant
 
-[![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
+[![CircleCI](https://circleci.com/gh/dwmkerr/langtonsant.svg?style=shield)](https://circleci.com/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
 
 [Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simulation which has a simple set of rules, which can produce [surprisingly complicated]() results. It is a great example of a Chaotic System, as is the case with most [Cellular Automata]().
 
