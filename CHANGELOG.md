@@ -1,6 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.2.1](https://github.com/dwmkerr/langtonsant/compare/v0.2.0...v0.2.1) (2020-05-12)
+
+
+### Features
+
+* **vector-transformations:** transformation tuples are now all vector ([#8](https://github.com/dwmkerr/langtonsant/issues/8)) ([96f382d](https://github.com/dwmkerr/langtonsant/commit/96f382d021caaa9a3ef342f280fca7f3c5684eea))
 
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/dwmkerr/langtonsant/compare/v0.1.0...v0.2.0) (2018-05-23)
