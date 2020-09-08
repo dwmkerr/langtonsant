@@ -20,7 +20,7 @@
     "preversion": "echo 'Version with \"npm run release\"' && exit 1"
   },
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "bootstrap": "^4.4.1",
     "bootstrap3": "^3.3.5",
     "express": "4.17.x",
