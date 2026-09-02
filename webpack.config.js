@@ -1,25 +1,27 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/app/app.js',
-    vendor: ['angular', 'jquery', 'bootstrap']
+    app: './src/app/app.js'
   },
   output: {
-    path: __dirname + '/dist',
-    filename:'[name].js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    clean: true
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
       inject: 'body'
     }),
+    //  Bootstrap 3's dist bundle reads jQuery as a global rather than importing
+    //  it, so it has to be provided as a free variable.
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      // angular: 'angular',
+      'window.jQuery': 'jquery'
     })
   ],
   module: {
@@ -30,23 +32,24 @@ module.exports = {
       },
       { test: /\.html$/, loader: 'html-loader' },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-        loader: 'file-loader'
+        test: /\.(png|jpe?g|gif|svg|woff2?|ttf|eot)$/,
+        type: 'asset/resource'
       }
     ]
   },
   optimization: {
-    // We no not want to minimize our code.
+    //  The bundle is meant to be readable: this is a demonstration of a
+    //  cellular automaton, and people do read the shipped source.
     minimize: false,
 
     splitChunks: {
       cacheGroups: {
-        commons: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'initial',
-        },
-      },
-    },
-  },
+          chunks: 'initial'
+        }
+      }
+    }
+  }
 };

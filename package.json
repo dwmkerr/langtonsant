@@ -8,42 +8,41 @@
   "author": "Dave Kerr",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
-    "test": "mocha \"./{,!(node_modules)/**/}*.spec.js\"",
-    "test:watch": "mocha --watch \"./{,!(node_modules)/**/}*.spec.js\"",
-    "test:debug": "mocha --inspect-brk --watch \"./{,!(node_modules)/**/}*.spec.js\"",
-    "test:coverage": "nyc --reporter=html --report-dir=./artifacts/coverage _mocha \"./{,!(node_modules)/**/}*.spec.js\"",
-    "test:ci": "nyc --reporter=lcov --reporter=html --report-dir=./artifacts/coverage _mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./artifacts/tests/test-report.xml \"./{,!(node_modules)/**/}*.spec.js\"",
-    "lint": "eslint --ignore-path .gitignore .",
+    "start": "webpack serve --mode development --open",
+    "test": "mocha \"src/**/*.spec.js\"",
+    "test:watch": "mocha --watch \"src/**/*.spec.js\"",
+    "test:debug": "mocha --inspect-brk --watch \"src/**/*.spec.js\"",
+    "test:coverage": "nyc --reporter=html --report-dir=./artifacts/coverage mocha \"src/**/*.spec.js\"",
+    "test:ci": "nyc --reporter=lcov --reporter=html --report-dir=./artifacts/coverage mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./artifacts/tests/test-report.xml \"src/**/*.spec.js\"",
+    "lint": "eslint .",
     "bundle": "webpack --mode production",
     "release": "npm run lint && npm test && standard-version",
     "preversion": "echo 'Version with \"npm run release\"' && exit 1"
   },
   "dependencies": {
-    "angular": "^1.8.0",
-    "bootstrap": "^4.4.1",
+    "angular": "^1.8.3",
     "bootstrap3": "^3.3.5",
-    "express": "4.17.x",
-    "jquery": "^3.5.1",
-    "react": "^16.13.1",
-    "webpack": "^4.42.0"
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "chai": "^4.2.0",
-    "css-loader": "^3.4.2",
-    "eslint": "^6.8.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^4.3.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "mocha": "^7.1.1",
-    "mocha-junit-reporter": "^1.23.3",
-    "nyc": "^15.0.0",
-    "popper.js": "^1.16.1",
+    "css-loader": "^7.1.5",
+    "eslint": "^10.9.1",
+    "globals": "^17.12.0",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.8",
+    "mocha": "^12.0.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "nyc": "^18.0.0",
     "standard-version": "^9.0.0",
-    "style-loader": "^1.1.3",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "style-loader": "^4.0.0",
+    "webpack": "^5.110.3",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.0.0"
   },
-  "homepage": "https://dwmkerr.github.io/langtonsant/"
+  "homepage": "https://dwmkerr.github.io/langtonsant/",
+  "engines": {
+    "node": ">=20"
+  }
 }

@@ -6,6 +6,8 @@ import 'bootstrap3/dist/css/bootstrap.min.css';
 import MainController from './main/MainController.js';
 import main from './main/main.js';
 import { hitTest } from './langton-renderer-canvas2d';
+import colourPickerTemplate from './laColourPickerTemplate.html';
+import leftRightTemplate from './laLeftRight.html';
 
 //  Define the langtons ant module. It depends on app controllers and directives.
 angular.module('langtonsant', [])
@@ -17,7 +19,7 @@ angular.module('langtonsant', [])
       scope: {
         'colour': '='
       },
-      template: require('./laColourPickerTemplate.html'),
+      template: colourPickerTemplate,
     };
   })
   .directive('laLeftright', function() {
@@ -26,7 +28,7 @@ angular.module('langtonsant', [])
       scope: {
         'value': '='
       },
-      template: require('./laLeftRight.html')
+      template: leftRightTemplate
     };
   });
 

@@ -1,7 +1,8 @@
+import template from './main.html';
 
 const main = () => {
   return {
-    template: require('./main.html'),
+    template,
     controller: 'MainController',
     controllerAs: 'main'
   };
