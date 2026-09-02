@@ -3,6 +3,6 @@ build:
 	npm install
 	npm run bundle
 
-# Copy to the S3 bucket.
-deploy:
-	aws s3 sync ./dist s3://langtonsant.com --region ap-southeast-1
+# Serve the built site locally, the way GitHub Pages will.
+serve: build
+	npx --yes http-server ./dist -o

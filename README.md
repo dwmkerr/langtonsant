@@ -1,10 +1,10 @@
 # Langton's Ant
 
-[![CircleCI](https://circleci.com/gh/dwmkerr/langtonsant.svg?style=shield)](https://circleci.com/gh/dwmkerr/langtonsant) [![codecov](https://codecov.io/gh/dwmkerr/langtonsant/branch/master/graph/badge.svg)](https://codecov.io/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
+[![main](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml/badge.svg)](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/dwmkerr/langtonsant/branch/master/graph/badge.svg)](https://codecov.io/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io)
 
 [Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simulation which has a simple set of rules, which can produce [surprisingly complicated]() results. It is a great example of a Chaotic System, as is the case with most [Cellular Automata]().
 
-[Try it in your browser now](http://langtonsant.com)
+[Try it in your browser now](https://dwmkerr.github.io/langtonsant/)
 
 ![Langton's Ant](./docs/langtonsant.jpg)
 
@@ -55,7 +55,7 @@ Some interesting example simulations are below.
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=LR"><img src="./docs/samples/langtonsant.png" alt="Screenshot: Langton's Ant" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=LR"><img src="./docs/samples/langtonsant.png" alt="Screenshot: Langton's Ant" /></a>
   </td>
 <td>
 <p><strong>Langton's Ant</strong></p>
@@ -67,14 +67,14 @@ forms a highway after about 10,000 moves.
 LR
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=LR)
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=LR)
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=(1,L,1),(1,L,1);(1,R,1),(0,0,0)"><img src="./docs/fibonacci.png" alt="Screenshot: Fibonacci Spiral" /></a>
   </td>
 <td>
 <p><strong>Fibonnaci Spiral</strong></p>
@@ -86,14 +86,14 @@ This is actually a Turmite program. It forms an ever growing Fibonacci Spiral:
 (0,R,1),(1,0,1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=(1,L,1),(1,L,1)(1,R,1),(0,0,0))
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Lines" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1)"><img src="./docs/lines.png" alt="Screenshot: Lines" /></a>
   </td>
 <td>
 <p><strong>Symmetric Growing Lines</strong></p>
@@ -105,14 +105,14 @@ A pair of lines which grow forever.
 (0, R, 1), (1, 0, 1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1))
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=(1,0,1),(1,L,1);(0,R,1),(1,0,1))
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1)"><img src="./docs/samples/pyramid.png" alt="Screenshot: Pyramid" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1)"><img src="./docs/samples/pyramid.png" alt="Screenshot: Pyramid" /></a>
   </td>
 <td>
 <strong>Magic Pyramid</strong>
@@ -124,14 +124,14 @@ A pyramid which grows one side at a time.
 (0, R, 1), (1, 0, 1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1))
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=(1,0,1),(0,L,1);(0,R,1),(1,0,1))
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1)"><img src="./docs/samples/snail.png" alt="Screenshot: Snail" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1)"><img src="./docs/samples/snail.png" alt="Screenshot: Snail" /></a>
   </td>
 <td>
 <p><strong>Snail Shell</strong></p>
@@ -143,14 +143,14 @@ A snail shell.
 (0,L,1) (1,R,1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1))
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=(1,R,0)(0,L,1);(0,L,1)(1,R,1))
 </p>
 </td>
 </tr>
 
 <tr>
   <td>
-    <a href="http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1)"><img src="./docs/samples/spiral.png" alt="Screenshot: Spiral" /></a>
+    <a href="https://dwmkerr.github.io/langtonsant/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1)"><img src="./docs/samples/spiral.png" alt="Screenshot: Spiral" /></a>
   </td>
 <td>
 <p><strong>Spiral</strong></p>
@@ -162,7 +162,7 @@ A spiral, weirdly resilient to traps, toggling tiles in the path of the ant has 
 (0,R,1) (1,0,1)
 ```
 
-[Open In Browser](http://www.langtonsant.com/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1))
+[Open In Browser](https://dwmkerr.github.io/langtonsant/?p=(1,0,1)(0,L,0);(0,R,1)(1,0,1))
 </p>
 </td>
 </tr>
@@ -283,42 +283,25 @@ To install dependencies and run the simulation in development mode.
 
 ## Deploying the Code
 
-To build the distribution, run:
+The site is published to GitHub Pages at
+[dwmkerr.github.io/langtonsant](https://dwmkerr.github.io/langtonsant/). Every
+push to `master` that passes lint and tests builds `dist/` and deploys it; there
+is nothing to run by hand. To check the production build locally:
 
 ```
-make build
+make serve
 ```
-
-To deploy to AWS, run:
-
-```
-make deploy
-```
-
-This command will require permissions to the `langtonsant.com` S3 bucket.
 
 ## CI/CD
 
-There is a simple CI/CD pipeline for this project:
+The pipeline is a single GitHub Actions workflow,
+[`main.yml`](./.github/workflows/main.yml):
 
-1. All commits build, test and lint on CircleCI 2.0
-2. Any commit to master will be built. If tests pass, it will automatically deploy to [www.langtonsant.com](www.langtonsant.com)
-3. Pushing a semver tag will trigger a publish to NPM
+1. Every push and pull request lints and tests.
+2. A push to `master` that passes deploys to GitHub Pages.
+3. Pushing a semver tag (`v*`) publishes to NPM (needs the `NPM_TOKEN` secret).
 
 Bump the version with `npm run release`.
-
-To test the build, install the CircleCI CLI:
-
-```sh
-curl -fLSs https://circle.ci/cli | bash
-```
-
-Then run the build:
-
-```sh
-circleci config validate
-circleci local execute --job build
-```
 
 ## URL Parameters
 
