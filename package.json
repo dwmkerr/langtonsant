@@ -43,5 +43,9 @@
   "homepage": "https://dwmkerr.github.io/langtonsant/",
   "engines": {
     "node": ">=20"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/dwmkerr"
   }
 }
