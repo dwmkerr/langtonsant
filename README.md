@@ -1,6 +1,6 @@
 # Langton's Ant
 
-[![main](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml/badge.svg)](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/dwmkerr/langtonsant/branch/master/graph/badge.svg)](https://codecov.io/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io) [![Buy me a coffee](https://img.shields.io/badge/thanks-buy%20me%20a%20coffee-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dwmkerr?frequency=one-time)
+[![main](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml/badge.svg)](https://github.com/dwmkerr/langtonsant/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/dwmkerr/langtonsant/branch/master/graph/badge.svg)](https://codecov.io/gh/dwmkerr/langtonsant) [![GuardRails badge](https://badges.production.guardrails.io/dwmkerr/langtonsant.svg)](https://www.guardrails.io) [![Donate](https://img.shields.io/badge/thanks-donate-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dwmkerr/sponsorships?frequency=one-time&amount=5)
 
 [Langton's Ant](http://en.wikipedia.org/wiki/Langton's_ant) is a simulation which has a simple set of rules, which can produce [surprisingly complicated]() results. It is a great example of a Chaotic System, as is the case with most [Cellular Automata]().
 
